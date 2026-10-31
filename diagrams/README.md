@@ -11,6 +11,7 @@ File names carry the post date as a prefix, the same way posts do, so an asset c
 | `2026-01-01-homelab-logs.mmd` (Mermaid) | `assets/images/2026-01-01-homelab-logs.svg` | `posts/2026-01-01-migrate-homelab.md` |
 | `2026-01-01-homelab-monitoring.mmd` (Mermaid) | `assets/images/2026-01-01-homelab-monitoring.svg` | `posts/2026-01-01-migrate-homelab.md` |
 | none (hand-written SVG) | `assets/images/2026-01-01-homelab-size.svg` | `posts/2026-01-01-migrate-homelab.md` |
+| none (hand-written SVG) | `assets/images/2025-09-30-voicevox-mcp-architecture.svg` | `posts/2025-09-30-voicevox-mcp-server.md` |
 
 ## Shared style
 
