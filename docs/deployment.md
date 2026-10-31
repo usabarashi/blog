@@ -1,63 +1,64 @@
-# Publishing (undecided)
+# Publishing
 
-## Current state
+## Current setup
 
-Checked through the GitHub API on 2026-10-31. None of it was changed.
+The blog is published from this repository, `usabarashi/blog`, by GitHub Pages at `https://usabarashi.github.io/blog/`.
 
-- `usabarashi/blog` is public (its initial state).
-- GitHub Pages is not configured for `usabarashi/blog` (`GET /repos/usabarashi/blog/pages` returns 404).
-- `usabarashi/usabarashi.github.io` does not exist, which contradicts the repository layout in the handover notes.
+- The repository is public, so the Markdown sources and the drafts under `posts/drafts/` are public as well. Publishing does not hide anything that is already in the repository.
+- Pages uses the "GitHub Actions" source, not a branch. Generated HTML is never committed.
+- `.github/workflows/build.yml` is the only workflow. It verifies every pull request, and it publishes on a push to `main` or a manual run on `main`.
 
-Repository visibility, Pages settings and deployment stay untouched until the GitHub Pro question is settled.
-`main` has no publishing workflow, so a merge cannot publish anything.
+## What the workflow does
 
-## Option A: private repository plus GitHub Pages
+The `site` job renders the site with `checks.x86_64-linux.site` and asserts the output is publishable.
+Publishing steps and a second job follow, guarded so that a pull request run uploads no artifact and deploys nothing.
 
-Keep the writing repository private and let Actions build on merge to `main` and publish to Pages.
+The two publishing runs share one concurrency group, so an older run cannot publish over a newer one.
+Manual runs are useful for redeploying without a new commit.
 
-- Publishing Pages from a private repository requires GitHub Pro or higher. On Free, Pages is only available for public repositories.
-- Drafts, draft pull requests and the Haskell sources stay private.
-- Only the HTML that Pages serves becomes public.
-- Builds consume Actions minutes of the private repository (the Free plan includes 2,000 minutes per month).
+## First-time setup
 
-## Option B: private writing repository plus public output repository
+Done once by the repository owner.
 
-Keep the writing repository private, make a separate output repository public, and let Actions copy only the generated site into it.
+1. Settings → Pages → Build and deployment → Source: **GitHub Actions**.
 
-- Using `usabarashi.github.io` as the output makes the site `https://usabarashi.github.io/`, not `/blog/`. `siteRoot` in `src/Main.hs` would have to become `https://usabarashi.github.io`.
-- Using a public repository named `blog` keeps `https://usabarashi.github.io/blog/` and needs no change.
-- `GITHUB_TOKEN` cannot write to another repository, so the transfer needs a deploy key or a fine-grained PAT with write access to the output repository, stored as a secret.
-- Actions minutes are consumed like in option A.
+   ```console
+   $ gh api -X POST repos/usabarashi/blog/pages -f build_type=workflow
+   ```
 
-## What deployment adds
+2. Settings → Environments → `github-pages` → Deployment branches and tags: limit to `main`.
+   The environment is created by the first deploy, so set this right after it appears.
 
-How the site is built is defined once, by `checks.<system>.site` in `flake.nix`.
-The deploy workflow must call that check rather than repeat its build steps, so there is only one place to keep the build working.
+3. Merge the workflow to `main` and let the run finish. The first deploy creates the environment and publishes the site.
 
-Option A additionally needs:
+## Verifying a deployment
 
-1. `usabarashi/blog` made private (owner action).
-2. The Pages source set to "GitHub Actions".
-3. A deploy workflow with `pages: write` and `id-token: write` permissions, a job in the `github-pages` environment, and only the Pages-specific steps: `actions/configure-pages`, `actions/upload-pages-artifact` (with the check's `result` directory as `path`) and `actions/deploy-pages`.
+```console
+$ gh run list --workflow build.yml --limit 3
+$ gh api repos/usabarashi/blog/pages --jq '{html_url, status, build_type}'
 
-Pin those actions to commit SHAs with the release in a trailing comment, the way `build.yml` does; otherwise a moved tag changes what the workflow runs.
+$ curl -sI https://usabarashi.github.io/blog/ | head -1
+$ curl -sI https://usabarashi.github.io/blog/css/style.css | head -1
+$ curl -sI https://usabarashi.github.io/blog/rss.xml | head -1
+$ curl -sI https://usabarashi.github.io/blog/sitemap.xml | head -1
+$ curl -s -o /dev/null -w "%{http_code}\n" https://usabarashi.github.io/blog/drafts
+404
+```
 
-If that workflow would end up repeating the checkout and Nix setup from `build.yml`, turn `build.yml` into a reusable workflow (`on: workflow_call`) and upload the rendered site as a job artifact for the deploy job to consume.
-Either way the build itself stays in one place.
+The Pages CDN can serve the previous version for a few minutes after a deploy.
+`*.github.io` uses HTTPS automatically; check "Enforce HTTPS" in Settings → Pages after the first deploy.
 
-Option B needs no Pages settings; its workflow pushes the same `result` directory to the output repository instead.
+`sitemap.xml` lists the pages that exist, and `rss.xml` carries absolute URLs, so both follow `siteRoot` in `src/Main.hs`.
+That constant must match the published URL.
 
-## PR previews
+## If the repository has to become private
 
-There is no PR preview.
-A preview is only useful if it opens from a link, and publishing a PR branch would expose drafts and overwrite the `main` site, because one repository maps to one GitHub Pages site.
-
-If link-based previews become a requirement, they need a separate hosting target or an access-controlled external service.
-Decide that together with repository visibility and the deployment method.
+Pages from a private repository requires GitHub Pro or higher.
+Without it, publishing needs a second, public repository that receives only the generated site, while this repository stays private.
+In that case the published URL depends on the output repository name, and `siteRoot` has to change unless the output repository is named `blog`.
 
 ## Open questions
 
-- Option A or option B (waiting on GitHub Pro availability).
-- Whether the public repository is `blog` or `usabarashi.github.io`. The former keeps `/blog/`; the latter requires changing `siteRoot`.
 - Whether to add a 404 page.
-- Whether PR previews must be reachable by link, and if so, where they are hosted.
+- Whether the site needs a custom domain.
+- Whether pull requests should get a preview that opens from a link. That needs a hosting target of its own, because one repository maps to one Pages site and publishing a PR branch would replace the live site.

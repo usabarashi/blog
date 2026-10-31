@@ -1,11 +1,11 @@
 name: build
 
-# Build verification only. Nothing is deployed from this workflow: the
-# publication method (private repo + GitHub Pages vs. private/public split) is
-# still undecided, so publishing is intentionally not wired up here.
+# Build verification on every pull request. Deployment happens on a push to main
+# or a manual run on main.
 #
-# TODO(deploy): add a separate workflow once the repository visibility and the
-# Pages setup are decided. See docs/deployment.md.
+# Publishing uses GitHub Pages from this public repository, so the rendered site
+# is public. The Markdown sources and the drafts under posts/drafts/ are public
+# in this repository as well.
 
 on:
   pull_request:
@@ -16,6 +16,12 @@ on:
 permissions:
   contents: read
 
+# Publishing runs share one queue so that an older run cannot publish over a
+# newer one. Every other run gets a unique group and never queues behind Pages.
+concurrency:
+  group: ${{ github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && 'pages' || format('build-{0}', github.run_id) }}
+  cancel-in-progress: false
+
 jobs:
   site:
     runs-on: ubuntu-latest
@@ -23,6 +29,8 @@ jobs:
       # Actions are pinned to commit SHAs so that a moved tag cannot change what
       # runs. The trailing comment records the release for updates.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - uses: cachix/install-nix-action@75c75c31ebece974e48ebc36b4ad125bd97bd97b # v31.11.3
         with:
@@ -33,3 +41,33 @@ jobs:
       # and that every link is relativized.
       - name: Build and render the site
         run: nix build --print-build-logs .#checks.x86_64-linux.site
+
+      # The Pages artifact is only produced for publishing runs, so pull request
+      # runs stay read-only and upload no artifact.
+      - name: Collect the site
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        run: cp -rL result site
+
+      - name: Configure Pages
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+
+      - name: Upload Pages artifact
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: site
+
+  deploy:
+    needs: site
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

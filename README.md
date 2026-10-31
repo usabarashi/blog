@@ -1,8 +1,7 @@
 # blog
 
 A static blog generated from Markdown by Hakyll and Pandoc.
-The intended URL is `https://usabarashi.github.io/blog/`.
-GitHub Pages is not configured and no deployment workflow exists yet; see [docs/deployment.md](docs/deployment.md).
+The site is published to `https://usabarashi.github.io/blog/` by GitHub Pages; see [docs/deployment.md](docs/deployment.md).
 
 ## Requirements
 
@@ -119,8 +118,10 @@ blog/
 
 ## Publishing
 
-Publishing is on hold; see [docs/deployment.md](docs/deployment.md).
-CI only verifies the build.
+The site is published from this repository by GitHub Pages.
+CI verifies every pull request, and deploys a push to `main` or a manual run on `main`; see [docs/deployment.md](docs/deployment.md).
+
+This repository is public, so the Markdown sources and the drafts under `posts/drafts/` are public as well.
 
 ## License
 
