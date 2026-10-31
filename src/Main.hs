@@ -14,6 +14,8 @@
 module Main (main) where
 
 import Hakyll
+import Data.List (isPrefixOf)
+import GHC.IO.Encoding (setLocaleEncoding, utf8)
 import Text.Pandoc.Highlighting (pygments, styleToCss)
 import Text.Pandoc.Options (HTMLMathMethod (MathML), WriterOptions (..))
 
@@ -25,6 +27,22 @@ import Text.Pandoc.Options (HTMLMathMethod (MathML), WriterOptions (..))
 -- HTML pages use relativized URLs.
 siteRoot :: String
 siteRoot = "https://usabarashi.github.io/blog"
+
+-- | Feed entries point at images through root-absolute paths, because the body
+-- is captured before 'relativizeUrls' runs. Aggregators resolve those paths
+-- against the feed origin, so prefix them with 'siteRoot' (which already ends
+-- without a slash) to keep the published site under @\/blog\/@ intact.
+absoluteBodyField :: Context String
+absoluteBodyField = field "description" $ \item ->
+    return $ prefixRootAbsoluteSrc (itemBody item)
+  where
+    needle = "src=\"/"
+
+    prefixRootAbsoluteSrc :: String -> String
+    prefixRootAbsoluteSrc [] = []
+    prefixRootAbsoluteSrc s@(c : cs)
+        | needle `isPrefixOf` s = "src=\"" ++ siteRoot ++ "/" ++ prefixRootAbsoluteSrc (drop (length needle) s)
+        | otherwise = c : prefixRootAbsoluteSrc cs
 
 siteTitle :: String
 siteTitle = "usabarashi blog"
@@ -143,7 +161,15 @@ feedConfiguration =
 --------------------------------------------------------------------------------
 
 main :: IO ()
-main = hakyll $ do
+main = do
+    -- The sources are UTF-8 (the posts are Japanese), but GHC opens files with
+    -- the locale encoding. The Nix build sandbox has no locale, so reading a
+    -- post would fail with "cannot decode byte sequence" without this.
+    setLocaleEncoding utf8
+    hakyll site
+
+site :: Rules ()
+site = do
     match "assets/**" $ do
         route $ gsubRoute "assets/" (const "")
         compile copyFileCompiler
@@ -247,7 +273,7 @@ main = hakyll $ do
         route idRoute
         compile $ do
             posts <- fmap (take 20) . recentFirst =<< loadAllSnapshots postPattern "content"
-            let feedCtx = postCtx <> bodyField "description"
+            let feedCtx = postCtx <> absoluteBodyField
             renderRss feedConfiguration feedCtx posts
 
     create ["sitemap.xml"] $ do

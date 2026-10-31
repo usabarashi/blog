@@ -75,8 +75,11 @@ To regenerate on a Linux machine with the pinned nixpkgs:
 
 ```sh
 nix shell nixpkgs#mermaid-cli nixpkgs#chromium -c \
-  mmdc -i diagrams/2026-01-01-homelab-before.mmd -o assets/images/2026-01-01-homelab-before.svg -b transparent
+  mmdc -i diagrams/2026-01-01-homelab-before.mmd -o assets/images/2026-01-01-homelab-before.svg -b white
 ```
+
+`-b white` gives the same background as the hand-written figures; `diagrams/README.md` holds the same command.
+After rendering, run `node scripts/normalize-svg-width.mjs` so the new SVG matches the display width of the others.
 
 Mermaid measures text while rendering, so the labels are only laid out correctly when the renderer can find a Japanese font.
 Install a CJK font in that shell if the boxes come out too narrow, and check the result before committing.
@@ -84,8 +87,8 @@ The committed `2026-01-01-homelab-before.svg` was rendered once by kroki.io; its
 
 Nothing verifies that an SVG matches its `.mmd` yet. Re-render after editing the source and inspect the result; a drift check belongs in CI once rendering is reproducible.
 
-The feed carries the post body as-is, so an image referenced as `/images/...` resolves from the site root rather than from `/blog/`.
-That is harmless while publishing is not set up, and is the place to fix when it is.
+The feed carries the post body before `relativizeUrls` runs, so root-absolute image paths reach aggregators unchanged and would resolve from the site root instead of `/blog/`.
+The feed therefore rewrites `src="/` to an absolute URL under `siteRoot` (`absoluteBodyField` in `src/Main.hs`); ordinary pages keep the relativized paths.
 
 ## Not verified
 
