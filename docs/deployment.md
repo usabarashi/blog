@@ -40,6 +40,8 @@ Option A additionally needs:
 2. The Pages source set to "GitHub Actions".
 3. A deploy workflow with `pages: write` and `id-token: write` permissions, a job in the `github-pages` environment, and only the Pages-specific steps: `actions/configure-pages`, `actions/upload-pages-artifact` (with the check's `result` directory as `path`) and `actions/deploy-pages`.
 
+Pin those actions to commit SHAs with the release in a trailing comment, the way `build.yml` does; otherwise a moved tag changes what the workflow runs.
+
 If that workflow would end up repeating the checkout and Nix setup from `build.yml`, turn `build.yml` into a reusable workflow (`on: workflow_call`) and upload the rendered site as a job artifact for the deploy job to consume.
 Either way the build itself stays in one place.
 
