@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$documentTitle$</title>
+$if(description)$<meta name="description" content="$description$">$endif$
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/syntax.css">
+<link rel="alternate" type="application/rss+xml" title="$siteTitle$" href="/rss.xml">
+</head>
+<body>
+<header class="site-header">
+$if(home)$<h1 class="site-title"><a href="/">$siteTitle$</a></h1>$else$<a class="site-title" href="/">$siteTitle$</a>$endif$
+<nav class="site-nav">
+<a href="/archive.html">Archive</a>
+<a href="/tags.html">Tags</a>
+<a href="/about.html">About</a>
+</nav>
+</header>
+<main class="site-main">
+$body$
+</main>
+<footer class="site-footer">
+<p>&copy; $author$</p>
+</footer>
+</body>
+</html>

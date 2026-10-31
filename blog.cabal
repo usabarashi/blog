@@ -1,0 +1,17 @@
+cabal-version:      3.0
+name:               blog
+version:            0.1.0.0
+build-type:         Simple
+synopsis:           Static site generator for usabarashi.github.io/blog
+description:        Hakyll based generator. Articles live in posts/ and pages/ as Markdown.
+license:            NONE
+extra-source-files: README.md
+
+executable site
+    main-is:            Main.hs
+    hs-source-dirs:     src
+    build-depends:      base   >= 4.14 && < 5
+                      , hakyll >= 4.16 && < 4.18
+                      , pandoc >= 3.0  && < 3.13
+    default-language:   Haskell2010
+    ghc-options:        -Wall -threaded -rtsopts

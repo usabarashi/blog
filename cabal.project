@@ -1,0 +1,5 @@
+packages: .
+
+-- The Nix devShell provides every dependency in GHC's package database,
+-- so cabal should not fetch sources from Hackage.
+active-repositories: :none
