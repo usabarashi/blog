@@ -81,13 +81,12 @@ CLI と MCP サーバは, Nix の flake からビルドします.
 `streaming` が false なら, テキスト全体を 1 回で頼みます.
 
 制限値と分割の設定を表にします.
-パスは, 対象にしたコミットのものです.
 
-| 項目 | 値 | 定義箇所 |
-|---|---|---|
-| 合成するテキストの長さ | 10,000 バイト | `src/mcp/tools.rs` |
-| `style_id` の上限 | 1000 | `src/mcp/tools.rs` |
-| 長さによる分割の閾値（既定） | 100 文字 | `src/synthesis/streaming.rs` |
+| 項目 | 値 |
+|---|---|
+| 合成するテキストの長さ | 10,000 バイト |
+| `style_id` の上限 | 1000 |
+| 長さによる分割の閾値（既定） | 100 文字 |
 
 ## MCP の応答と音声の再生
 
@@ -127,6 +126,6 @@ WAV を base64 にすると, データは約 4/3 倍に膨らみます.
 ## リンク
 
 - リポジトリ： [usabarashi/voicevox-cli](https://github.com/usabarashi/voicevox-cli)
-- MCP サーバのドキュメント： [docs/mcp-usage.md](https://github.com/usabarashi/voicevox-cli/blob/d618466/docs/mcp-usage.md)
+- MCP サーバのドキュメント： [docs/mcp-usage.md](https://github.com/usabarashi/voicevox-cli/blob/main/docs/mcp-usage.md)
 - MCP の仕様： [2025-06-18](https://modelcontextprotocol.io/specification/2025-06-18)
 - VOICEVOX の公式サイト： [voicevox.hiroshiba.jp](https://voicevox.hiroshiba.jp/)
