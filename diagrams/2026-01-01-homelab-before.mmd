@@ -1,0 +1,7 @@
+%%{init: {"theme": "base", "themeVariables": {"fontFamily": "system-ui, -apple-system, Hiragino Sans, sans-serif", "fontSize": "14px", "primaryColor": "#e6e6e6", "primaryBorderColor": "#333333", "primaryTextColor": "#222222", "lineColor": "#333333", "clusterBkg": "#f7f7f7", "clusterBorder": "#333333", "edgeLabelBackground": "#ffffff", "tertiaryColor": "#f7f7f7"}, "flowchart": {"wrappingWidth": 400}}}%%
+flowchart LR
+    C["Client"]
+    S["Server (Debian)<br/>Docker Compose"]
+    G["GitHub<br/>(code)"]
+    C -->|"SSH"| S
+    S -->|"push / pull"| G

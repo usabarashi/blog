@@ -64,6 +64,29 @@ That second assertion is the invariant behind serving the same output from both 
 
 The protection applies to files under `posts/drafts/` only; a draft placed directly in `posts/` would be published.
 
+## Diagrams
+
+A diagram is authored in Mermaid and committed twice: the source under `diagrams/*.mmd`, and a rendered SVG under `assets/images/`.
+A figure that Mermaid cannot express, such as the to-scale chassis comparison, is written directly as an SVG; `diagrams/README.md` records which outputs come from which source.
+Pre-rendering keeps the site free of JavaScript and keeps the Nix build independent of a browser.
+Chromium is Linux-only in nixpkgs, so `checks.<system>.site` must never render diagrams; it only copies the committed SVG.
+
+To regenerate on a Linux machine with the pinned nixpkgs:
+
+```sh
+nix shell nixpkgs#mermaid-cli nixpkgs#chromium -c \
+  mmdc -i diagrams/2026-01-01-homelab-before.mmd -o assets/images/2026-01-01-homelab-before.svg -b transparent
+```
+
+Mermaid measures text while rendering, so the labels are only laid out correctly when the renderer can find a Japanese font.
+Install a CJK font in that shell if the boxes come out too narrow, and check the result before committing.
+The committed `2026-01-01-homelab-before.svg` was rendered once by kroki.io; its labels are `foreignObject` HTML rather than SVG text, which browsers render but some non-browser viewers ignore.
+
+Nothing verifies that an SVG matches its `.mmd` yet. Re-render after editing the source and inspect the result; a drift check belongs in CI once rendering is reproducible.
+
+The feed carries the post body as-is, so an image referenced as `/images/...` resolves from the site root rather than from `/blog/`.
+That is harmless while publishing is not set up, and is the place to fix when it is.
+
 ## Not verified
 
 - `site watch`, the Warp preview server. The agent sandbox rejects Warp's sendfile call, so the server could not be exercised here.
