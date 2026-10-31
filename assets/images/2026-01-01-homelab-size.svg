@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" role="img" width="672" height="399">
+  <style>
+    .bg { fill: #ffffff; }
+    .box { fill: #e6e6e6; stroke: #333333; stroke-width: 1.5; }
+    .edge { stroke: #333333; stroke-width: 1.5; stroke-dasharray: 4 4; fill: none; }
+    .name { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; fill: #222222; }
+    .dim { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 13px; fill: #444444; }
+    .spec { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; fill: #222222; text-anchor: middle; }
+  </style>
+
+  <rect class="bg" x="0" y="0" width="640" height="380" fill="#ffffff" />
+  <line class="edge" x1="30" y1="320" x2="610" y2="320" />
+
+  <rect class="box" x="50" y="53" width="210" height="267" rx="5" />
+  <text class="spec" x="155" y="179.5">Debian</text>
+  <text class="spec" x="155" y="201.5">Docker Compose</text>
+  <text class="name" x="50" y="344">HP ProLiant MicroServer N54L</text>
+  <text class="dim" x="50" y="364">210 x 260 x 267 mm</text>
+
+  <rect class="box" x="400" y="221" width="99" height="99" rx="5" />
+  <text class="spec" x="449.5" y="263.5">NixOS</text>
+  <text class="spec" x="449.5" y="285.5">systemd</text>
+  <text class="name" x="400" y="344">Beelink ME mini</text>
+  <text class="dim" x="400" y="364">99 x 99 x 99 mm</text>
+</svg>

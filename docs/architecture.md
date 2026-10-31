@@ -64,6 +64,32 @@ That second assertion is the invariant behind serving the same output from both 
 
 The protection applies to files under `posts/drafts/` only; a draft placed directly in `posts/` would be published.
 
+## Diagrams
+
+A diagram is authored in Mermaid and committed twice: the source under `diagrams/*.mmd`, and a rendered SVG under `assets/images/`.
+A figure that Mermaid cannot express, such as the to-scale chassis comparison, is written directly as an SVG; `diagrams/README.md` records which outputs come from which source.
+Pre-rendering keeps the site free of JavaScript and keeps the Nix build independent of a browser.
+Chromium is Linux-only in nixpkgs, so `checks.<system>.site` must never render diagrams; it only copies the committed SVG.
+
+To regenerate on a Linux machine with the pinned nixpkgs:
+
+```sh
+nix shell nixpkgs#mermaid-cli nixpkgs#chromium -c \
+  mmdc -i diagrams/2026-01-01-homelab-before.mmd -o assets/images/2026-01-01-homelab-before.svg -b white
+```
+
+`-b white` gives the same background as the hand-written figures; `diagrams/README.md` holds the same command.
+After rendering, run `node scripts/normalize-svg-width.mjs` so the new SVG matches the display width of the others.
+
+Mermaid measures text while rendering, so the labels are only laid out correctly when the renderer can find a Japanese font.
+Install a CJK font in that shell if the boxes come out too narrow, and check the result before committing.
+The committed `2026-01-01-homelab-before.svg` was rendered once by kroki.io; its labels are `foreignObject` HTML rather than SVG text, which browsers render but some non-browser viewers ignore.
+
+Nothing verifies that an SVG matches its `.mmd` yet. Re-render after editing the source and inspect the result; a drift check belongs in CI once rendering is reproducible.
+
+The feed carries the post body before `relativizeUrls` runs, so root-absolute image paths reach aggregators unchanged and would resolve from the site root instead of `/blog/`.
+The feed therefore rewrites `src="/` to an absolute URL under `siteRoot` (`absoluteBodyField` in `src/Main.hs`); ordinary pages keep the relativized paths.
+
 ## Not verified
 
 - `site watch`, the Warp preview server. The agent sandbox rejects Warp's sendfile call, so the server could not be exercised here.

@@ -44,6 +44,9 @@
           name = "blog-site";
           src = self;
           nativeBuildInputs = [ self.packages.${pkgs.stdenv.hostPlatform.system}.default ];
+          # GHC reads the Markdown sources with the locale encoding. The build
+          # sandbox has no locale, so a UTF-8 post fails to decode without it.
+          LANG = "C.UTF-8";
           buildPhase = ''
             export HOME=$(mktemp -d)
             site build
