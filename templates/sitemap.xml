@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>$siteRoot$/</loc></url>
+<url><loc>$siteRoot$/archive.html</loc></url>
+<url><loc>$siteRoot$/tags.html</loc></url>
+$for(entries)$<url><loc>$loc$</loc>$if(lastmod)$<lastmod>$lastmod$</lastmod>$endif$</url>
+$endfor$</urlset>
