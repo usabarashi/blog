@@ -10,6 +10,8 @@ The dev shell therefore exposes the same packages that the Nix build compiles ag
 `cabal.project` sets `active-repositories: :none`, so cabal never fetches sources from Hackage.
 Dependencies resolve to the versions in the dev shell, which keeps `cabal build` aligned with the Nix build instead of drifting towards newer Hackage releases.
 
+The same check runs on `ubuntu-latest` in CI, so the Linux build is exercised on every pull request.
+
 Two choices are worth recording because the files do not explain them.
 
 - nixpkgs ships a Hakyll release that Hackage has marked deprecated.
@@ -64,6 +66,5 @@ The protection applies to files under `posts/drafts/` only; a draft placed direc
 
 ## Not verified
 
-- Running on GitHub Actions (`ubuntu-latest`). The x86_64-linux dependencies should be available from `cache.nixos.org`, but nothing ran there from this environment.
 - `site watch`, the Warp preview server. The agent sandbox rejects Warp's sendfile call, so the server could not be exercised here.
   The output of `site build` was served by a static server under a `/blog/` prefix instead, and the HTML, CSS and RSS were fetched successfully.
