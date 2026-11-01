@@ -1,0 +1,11 @@
+%%{init: {"theme": "base", "themeVariables": {"fontFamily": "system-ui, -apple-system, Hiragino Sans, sans-serif", "fontSize": "14px", "primaryColor": "#e6e6e6", "primaryBorderColor": "#333333", "primaryTextColor": "#222222", "lineColor": "#333333", "clusterBkg": "#f7f7f7", "clusterBorder": "#333333", "edgeLabelBackground": "#ffffff", "tertiaryColor": "#f7f7f7"}, "flowchart": {"wrappingWidth": 400}}}%%
+flowchart LR
+    A["tfc-agent<br/>plan / apply"]
+    W["Terraform Workspace<br/>(HCP Terraform)"]
+    S[("state")]
+    R[("private registry<br/>(HCP Terraform)")]
+    U["APC GS Pro 500<br/>(Home LAN)"]
+    A -->|"outbound HTTPS"| W
+    W --- S
+    A -->|"provider"| R
+    A -->|"HTTP"| U
