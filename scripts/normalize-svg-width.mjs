@@ -1,5 +1,7 @@
-// Rewrite the width/height of committed SVGs so every figure in a post has the
-// same display width. The viewBox is kept, so the drawing scales proportionally.
+// Rewrite the width/height of committed SVGs so a wide drawing fits the text
+// column. Narrow drawings keep their natural width: stretching them to 672px
+// would enlarge the 14px labels, so a figure with fewer nodes would read louder
+// than the prose. The viewBox is kept, so the drawing scales proportionally.
 //
 // Usage: node scripts/normalize-svg-width.mjs [targetWidth]
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -17,13 +19,14 @@ for (const name of readdirSync(dir).filter((f) => f.endsWith(".svg"))) {
     continue;
   }
   const [, , , w, h] = viewBox.map(Number);
-  const height = Math.round((target * h) / w);
+  const width = Math.min(target, Math.round(w));
+  const height = Math.round((width * h) / w);
   const out = svg.replace(/<svg([^>]*?)>/, (m, attrs) => {
     const cleaned = attrs
       .replace(/\swidth="[^"]*"/, "")
       .replace(/\sheight="[^"]*"/, "");
-    return `<svg${cleaned} width="${target}" height="${height}">`;
+    return `<svg${cleaned} width="${width}" height="${height}">`;
   });
   writeFileSync(path, out);
-  console.log(`${path}: ${target}x${height}`);
+  console.log(`${path}: ${width}x${height}`);
 }

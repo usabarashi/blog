@@ -9,6 +9,10 @@ File names carry the post date as a prefix, the same way posts do, so an asset c
 | `2026-01-01-homelab-after.mmd` (Mermaid) | `assets/images/2026-01-01-homelab-after.svg` | `posts/2026-01-01-migrate-homelab.md` |
 | `2026-01-01-homelab-secrets.mmd` (Mermaid) | `assets/images/2026-01-01-homelab-secrets.svg` | `posts/2026-01-01-migrate-homelab.md` |
 | `2026-01-01-homelab-logs.mmd` (Mermaid) | `assets/images/2026-01-01-homelab-logs.svg` | `posts/2026-01-01-migrate-homelab.md` |
+| `2026-02-22-terraform-provider-apc-agents.mmd` (Mermaid) | `assets/images/2026-02-22-terraform-provider-apc-agents.svg` | `posts/2026-02-22-terraform-provider-apc.md` |
+| `2026-02-22-terraform-provider-apc-mail-relay.mmd` (Mermaid) | `assets/images/2026-02-22-terraform-provider-apc-mail-relay.svg` | `posts/2026-02-22-terraform-provider-apc.md` |
+| `2026-02-22-terraform-provider-apc-credentials.mmd` (Mermaid) | `assets/images/2026-02-22-terraform-provider-apc-credentials.svg` | `posts/2026-02-22-terraform-provider-apc.md` |
+| `2026-02-22-terraform-provider-apc-session.mmd` (Mermaid) | `assets/images/2026-02-22-terraform-provider-apc-session.svg` | `posts/2026-02-22-terraform-provider-apc.md` |
 | `2026-01-01-homelab-monitoring.mmd` (Mermaid) | `assets/images/2026-01-01-homelab-monitoring.svg` | `posts/2026-01-01-migrate-homelab.md` |
 | none (hand-written SVG) | `assets/images/2026-01-01-homelab-size.svg` | `posts/2026-01-01-migrate-homelab.md` |
 | none (hand-written SVG) | `assets/images/2025-09-30-voicevox-mcp-architecture.svg` | `posts/2025-09-30-voicevox-mcp-server.md` |
@@ -44,7 +48,8 @@ Re-render when the layout needs to change, and check the result by eye: nothing 
 
 ## Width
 
-Every SVG is written with `width="672"` (the width of the text column) and a height derived from its `viewBox`, so the figures in a post share one display width.
+Every SVG is written at most `672` px wide (the width of the text column) with a height derived from its `viewBox`.
+A drawing narrower than the column keeps its natural width, so the labels stay at 14px instead of being enlarged with the drawing.
 After re-rendering a diagram, run `node scripts/normalize-svg-width.mjs` to restore it.
 
 ## Size comparison

@@ -187,10 +187,12 @@ deploy --remote-build 'path:.#<HOST>'
 
 ![秘密情報の復号から参照までの流れ](/images/2026-01-01-homelab-secrets.svg)
 
-`docker/.env` は `agenix` に置き換えました.
-age ファイルは別のプライベートな flake input にあり, agenix の各秘密情報の定義で `owner = "root"`, `mode = "0400"` を指定します.
-復号されたファイルは `/run/agenix` に置かれ, ユニットは `EnvironmentFile` から読みます.
-CI はプライベートリポジトリに触れずに評価できるよう, input を `secrets-dummy` に差し替えます.
+`docker/.env` は `sops-nix` に置き換えました.
+秘密情報は別のプライベートな flake input にある `secrets.yaml` 1 つにまとめ, age で暗号化しています.
+復号にはホストの SSH ホスト鍵を使い, 各秘密情報の定義で `secrets.yaml` 内の位置, `owner = "root"`, `mode = "0400"` を指定します.
+復号されたファイルは `/run/secrets` に置かれ, ユニットは `EnvironmentFile` から読みます.
+環境変数としてまとめたい場合は, `sops.templates` で `/run` 以下に環境ファイルを生成します.
+CI はプライベートリポジトリに触れずに評価できるよう, input を `nix/secrets-dummy` に差し替え, `validateSopsFiles` を切ります.
 
 ## ログの保存と障害通知
 

@@ -1,0 +1,9 @@
+%%{init: {"theme": "base", "themeVariables": {"fontFamily": "system-ui, -apple-system, Hiragino Sans, sans-serif", "fontSize": "14px", "primaryColor": "#e6e6e6", "primaryBorderColor": "#333333", "primaryTextColor": "#222222", "lineColor": "#333333", "clusterBkg": "#f7f7f7", "clusterBorder": "#333333", "edgeLabelBackground": "#ffffff", "tertiaryColor": "#f7f7f7"}, "flowchart": {"wrappingWidth": 400}}}%%
+flowchart LR
+    subgraph LAN["Home LAN"]
+        U["APC UPS"]
+        R["SMTP relay<br/>(Postfix)"]
+    end
+    I["iCloud SMTP"]
+    U -->|"port 25, STARTTLS"| R
+    R -->|"port 587, STARTTLS"| I
