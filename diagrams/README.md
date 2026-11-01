@@ -48,7 +48,8 @@ Re-render when the layout needs to change, and check the result by eye: nothing 
 
 ## Width
 
-Every SVG is written with `width="672"` (the width of the text column) and a height derived from its `viewBox`, so the figures in a post share one display width.
+Every SVG is written at most `672` px wide (the width of the text column) with a height derived from its `viewBox`.
+A drawing narrower than the column keeps its natural width, so the labels stay at 14px instead of being enlarged with the drawing.
 After re-rendering a diagram, run `node scripts/normalize-svg-width.mjs` to restore it.
 
 ## Size comparison
