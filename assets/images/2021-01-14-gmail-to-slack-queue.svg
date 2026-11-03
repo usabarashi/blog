@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 350" role="img" width="672" height="350">
+  <title>Unread threads and message posting</title>
+  <style>
+    .bg { fill: #ffffff; }
+    .container { fill: #f7f7f7; stroke: #333333; stroke-width: 1.5; }
+    .message { fill: #e6e6e6; stroke: #333333; stroke-width: 1.2; }
+    .message-read { fill: #ffffff; stroke: #333333; stroke-width: 1.2; stroke-dasharray: 4 3; }
+    .edge { stroke: #333333; stroke-width: 1.5; fill: none; }
+    .label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; fill: #222222; text-anchor: middle; }
+    .title { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; fill: #222222; text-anchor: start; font-weight: 600; }
+    .step { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 13px; fill: #222222; text-anchor: start; }
+    .note { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: start; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="672" height="350" />
+
+  <text class="label" x="110" y="30">Gmail</text>
+  <text class="label" x="340" y="30">handler</text>
+  <text class="label" x="565" y="30">Slack</text>
+
+  <rect class="container" x="20" y="50" width="180" height="100" rx="5" />
+  <text class="title" x="32" y="72">Thread A</text>
+  <rect class="message-read" x="32" y="82" width="156" height="26" rx="3" />
+  <text class="label" x="110" y="100">A1  read</text>
+  <rect class="message" x="32" y="114" width="156" height="26" rx="3" />
+  <text class="label" x="110" y="132">A2  unread</text>
+
+  <rect class="container" x="20" y="170" width="180" height="70" rx="5" />
+  <text class="title" x="32" y="192">Thread B</text>
+  <rect class="message" x="32" y="200" width="156" height="26" rx="3" />
+  <text class="label" x="110" y="218">B1  unread</text>
+
+  <rect class="container" x="240" y="50" width="200" height="200" rx="5" />
+  <text class="step" x="252" y="82">search is:unread</text>
+  <text class="step" x="252" y="110">returns Thread A, Thread B</text>
+  <text class="step" x="252" y="140">getMessages()</text>
+  <text class="step" x="252" y="168">returns all messages</text>
+  <text class="step" x="252" y="198">post to Slack</text>
+  <text class="step" x="252" y="228">markRead()</text>
+
+  <rect class="message" x="480" y="70" width="170" height="28" rx="3" />
+  <text class="label" x="565" y="89">A1</text>
+  <rect class="message" x="480" y="106" width="170" height="28" rx="3" />
+  <text class="label" x="565" y="125">A2</text>
+  <rect class="message" x="480" y="142" width="170" height="28" rx="3" />
+  <text class="label" x="565" y="161">B1</text>
+
+  <line class="edge" x1="200" y1="120" x2="240" y2="120" marker-end="url(#arrow)" />
+  <line class="edge" x1="440" y1="120" x2="480" y2="120" marker-end="url(#arrow)" />
+  <text class="note" x="460" y="110" style="text-anchor: middle">post</text>
+
+  <text class="note" x="20" y="270">A thread is selected if</text>
+  <text class="note" x="20" y="288">any message is unread.</text>
+  <text class="note" x="480" y="200">A1 is already read,</text>
+  <text class="note" x="480" y="218">but still posted.</text>
+
+  <line class="edge" x1="340" y1="250" x2="340" y2="280" marker-end="url(#arrow)" stroke-dasharray="4 3" />
+  <text class="note" x="350" y="270">next run</text>
+  <rect class="container" x="240" y="280" width="200" height="40" rx="5" />
+  <text class="label" x="340" y="305">no unread threads</text>
+</svg>

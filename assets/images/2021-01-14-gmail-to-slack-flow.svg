@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 240" role="img" width="672" height="240">
+  <title>Gmail to Slack notification flow</title>
+  <style>
+    .bg { fill: #ffffff; }
+    .box { fill: #e6e6e6; stroke: #333333; stroke-width: 1.5; }
+    .box-alt { fill: #f7f7f7; stroke: #333333; stroke-width: 1.5; }
+    .group { fill: none; stroke: #333333; stroke-width: 1.5; stroke-dasharray: 5 4; }
+    .edge { stroke: #333333; stroke-width: 1.5; fill: none; }
+    .label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; fill: #222222; text-anchor: middle; }
+    .small { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+    .group-label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 13px; fill: #444444; text-anchor: start; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="672" height="240" />
+  <rect class="group" x="10" y="40" width="652" height="110" rx="8" />
+  <text class="group-label" x="20" y="30">Google Apps Script</text>
+
+  <rect class="box" x="25" y="70" width="130" height="50" rx="5" />
+  <text class="label" x="90" y="90">time-driven</text>
+  <text class="small" x="90" y="108">trigger (1 min)</text>
+
+  <rect class="box" x="175" y="70" width="140" height="50" rx="5" />
+  <text class="label" x="245" y="90">Gmail search</text>
+  <text class="small" x="245" y="108">is:unread</text>
+
+  <rect class="box" x="335" y="70" width="130" height="50" rx="5" />
+  <text class="label" x="400" y="90">Slack post</text>
+  <text class="small" x="400" y="108">messages</text>
+
+  <rect class="box" x="485" y="70" width="150" height="50" rx="5" />
+  <text class="label" x="560" y="95">mark thread read</text>
+
+  <line class="edge" x1="155" y1="95" x2="175" y2="95" marker-end="url(#arrow)" />
+  <line class="edge" x1="315" y1="95" x2="335" y2="95" marker-end="url(#arrow)" />
+  <line class="edge" x1="465" y1="95" x2="485" y2="95" marker-end="url(#arrow)" />
+  <line class="edge" x1="560" y1="120" x2="560" y2="170" marker-end="url(#arrow)" />
+  <text class="small" x="570" y="142" text-anchor="start">Message-ID</text>
+
+  <rect class="box-alt" x="485" y="170" width="150" height="44" rx="5" />
+  <text class="label" x="560" y="197">Cloud Logging</text>
+</svg>
