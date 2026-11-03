@@ -25,7 +25,7 @@ tags:
 ## フロンティアモデルの品質を要所で得る
 
 Pi では, 実行役と相談役を分けてモデルを使っています.
-Claude Code でも advisor を使って, フロンティアモデルの呼び出しを要所だけに抑えていました.
+Claude Code の advisor 機能でも, フロンティアモデルの呼び出しを要所だけに抑えていました.
 プライベートでもその考え方を取り入れ, 以前は `codex exec` でフロンティアモデルを呼んでいました.
 いまは Advisor プラグインに置き換えています.
 実行役は OpenCode Go の DeepSeek V4.1 Flash に任せます.
@@ -51,7 +51,7 @@ Pi のパッケージと設定もここにまとめています.
 
 `~/.pi/agent` の設定ファイルは, home-manager の out-of-store symlink でリポジトリに向けています.
 編集はそのまま次の起動に反映されます.
-変更はリポジトリ側に反映されるので, Git で差分を確認できます.
+変更はリポジトリ側に残るので, Git で差分を確認できます.
 
 ## サンドボックスで触れられる範囲を決める
 
@@ -61,7 +61,7 @@ Pi のパッケージと設定もここにまとめています.
 モデルの判定に委ねる確率論的なガードレールには依存していません.
 
 Seatbelt では, プロセスが触れられる範囲をプロファイルで決めます.
-deny-default（既定で拒否）プロファイルを使っています.
+deny-default (既定で拒否) プロファイルを使っています.
 
 | 種類 | 対象 | アクセス |
 |---|---|---|
@@ -94,8 +94,10 @@ shim はストアのバイナリを直接実行すれば迂回できます.
 
 - [usabarashi/nix-config](https://github.com/usabarashi/nix-config)
 - [Pi](https://pi.dev/)
+- [earendil-works/pi](https://github.com/earendil-works/pi)
 - [Pi のドキュメント](https://pi.dev/docs)
 - [Agent Skills の仕様](https://agentskills.io/specification)
 - [Model Context Protocol](https://modelcontextprotocol.io/)
 - [home-manager](https://nix-community.github.io/home-manager/)
+- [sandbox-exec(1)](https://keith.github.io/xcode-man-pages/sandbox-exec.1.html)
 - [GitHub の fine-grained PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)

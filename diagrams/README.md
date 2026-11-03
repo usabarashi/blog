@@ -19,6 +19,7 @@ File names carry the post date as a prefix, the same way posts do, so an asset c
 | none (hand-written SVG) | `assets/images/2025-09-30-voicevox-mcp-architecture.svg` | `posts/2025-09-30-voicevox-mcp-server.md` |
 | none (hand-written SVG) | `assets/images/2021-01-14-gmail-to-slack-flow.svg` | `posts/2021-01-14-gmail-to-slack-gas.md` |
 | none (hand-written SVG) | `assets/images/2021-01-14-gmail-to-slack-queue.svg` | `posts/2021-01-14-gmail-to-slack-gas.md` |
+| none (hand-written SVG) | `assets/images/2026-10-14-pi-advisor-flow.svg` | `posts/2026-10-14-switch-to-pi-coding-agent.md` |
 
 ## Shared style
 
