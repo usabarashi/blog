@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 336" role="img" width="672" height="336">
+  <title>Four VLAN segments behind one gateway, with the AP trunk</title>
+  <style>
+    .bg { fill: #ffffff; }
+    .box { fill: #e6e6e6; stroke: #333333; stroke-width: 1.5; }
+    .group { fill: none; stroke: #333333; stroke-width: 1.5; stroke-dasharray: 6 4; }
+    .edge { stroke: #333333; stroke-width: 1.5; fill: none; }
+    .label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; fill: #222222; text-anchor: middle; }
+    .sub { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+    .note { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="672" height="336" fill="#ffffff" />
+
+  <rect class="box" x="16" y="24" width="104" height="40" rx="5" />
+  <text class="label" x="68" y="49">Internet</text>
+
+  <line class="edge" x1="120" y1="44" x2="144" y2="44" marker-end="url(#arrow)" />
+
+  <rect class="box" x="144" y="24" width="104" height="40" rx="5" />
+  <text class="label" x="196" y="49">ONU</text>
+
+  <line class="edge" x1="248" y1="44" x2="296" y2="44" marker-end="url(#arrow)" />
+
+  <rect class="box" x="296" y="16" width="176" height="56" rx="5" />
+  <text class="label" x="384" y="40">Gateway</text>
+  <text class="sub" x="384" y="58">DHCP / DNS / firewall</text>
+
+  <text class="note" x="352" y="94" text-anchor="end">WAN side (External zone)</text>
+
+  <line class="edge" x1="384" y1="72" x2="384" y2="150" />
+  <line class="edge" x1="84" y1="150" x2="588" y2="150" />
+  <line class="edge" x1="84" y1="150" x2="84" y2="200" />
+  <line class="edge" x1="252" y1="150" x2="252" y2="200" />
+  <line class="edge" x1="420" y1="150" x2="420" y2="200" />
+  <line class="edge" x1="588" y1="150" x2="588" y2="200" />
+
+  <rect class="group" x="168" y="192" width="496" height="72" rx="8" />
+
+  <rect class="box" x="8" y="200" width="152" height="56" rx="5" />
+  <text class="label" x="84" y="233">Servers</text>
+
+  <rect class="box" x="176" y="200" width="152" height="56" rx="5" />
+  <text class="label" x="252" y="233">Clients</text>
+
+  <rect class="box" x="344" y="200" width="152" height="56" rx="5" />
+  <text class="label" x="420" y="233">IoT</text>
+
+  <rect class="box" x="512" y="200" width="152" height="56" rx="5" />
+  <text class="label" x="588" y="233">Work</text>
+
+  <text class="note" x="416" y="288" text-anchor="middle">SSIDs on the AP: its uplink is a trunk for these VLANs</text>
+</svg>
