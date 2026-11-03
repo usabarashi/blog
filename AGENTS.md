@@ -3,14 +3,16 @@
 ## Build and preview
 
 A `cabal run site -- watch` process (or `nix run . -- watch`) is kept running while the site is being edited.
-It rebuilds `_site/` on save and serves it at http://localhost:8000/, so do not run `build` or `rebuild` by hand.
-Both write `_cache/`, and running one while the watcher is up fails with a store decoding error such as `Data.Binary.Get.runGet at position 0: not enough bytes`.
+It rebuilds `_site/` on save and serves it at http://localhost:8000/, so no manual build is needed while it runs.
+Stop the watcher before running `build` or `rebuild`: both write `_cache/`, and running one alongside the watcher fails with a store decoding error such as `Data.Binary.Get.runGet at position 0: not enough bytes`.
+With no watcher running, `build` and `rebuild` work as usual.
 Check the generated HTML under `_site/` when a change needs verifying.
 
 ## Personal information
 
-`posts/` and `pages/` are published, so keep personal details out of the prose and code samples: email addresses, bank and service names, subscriptions, device inventory, and the author's own label names.
-Illustrate with reserved names such as `you@example.com`, `@shop.example`, or `Assets/銀行`, and present examples as general practice rather than as a description of the author's own configuration.
+`posts/` and `pages/` are published, so do not copy the author's private configuration details into the prose or code samples: email addresses, the banks and paid services the author uses, devices, or their own label names.
+Illustrate with reserved names such as `you@example.com`, `@shop.example`, or `Assets/銀行`, and present examples as general practice rather than as a description of the author's own setup.
+Naming a product the article is about (Gmail, Terraform) is not a personal detail.
 
 ## Article prose
 
