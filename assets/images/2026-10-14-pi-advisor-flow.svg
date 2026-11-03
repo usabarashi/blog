@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 210" role="img" width="640" height="210">
+  <title>DeepSeek V4.1 Flash の実行役と GPT-6 Astra の相談役</title>
+  <style>
+    .bg { fill: #ffffff; }
+    .box { fill: #e6e6e6; stroke: #333333; stroke-width: 1.5; }
+    .edge { stroke: #333333; stroke-width: 1.5; fill: none; }
+    .label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; fill: #222222; text-anchor: middle; }
+    .sub { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+    .edge-label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="640" height="210" fill="#ffffff" />
+
+  <rect class="box" x="20" y="55" width="180" height="64" rx="5" />
+  <text class="label" x="110" y="82">DeepSeek V4.1 Flash</text>
+  <text class="sub" x="110" y="102">OpenCode Go / 実行役</text>
+
+  <rect class="box" x="250" y="55" width="140" height="64" rx="5" />
+  <text class="label" x="320" y="82">Advisor</text>
+  <text class="sub" x="320" y="102">プラグイン</text>
+
+  <rect class="box" x="440" y="55" width="180" height="64" rx="5" />
+  <text class="label" x="530" y="82">GPT-6 Astra</text>
+  <text class="sub" x="530" y="102">ChatGPT Plus / 相談役</text>
+
+  <line class="edge" x1="200" y1="87" x2="250" y2="87" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+  <text class="edge-label" x="225" y="75">依頼</text>
+
+  <line class="edge" x1="390" y1="87" x2="440" y2="87" marker-end="url(#arrow)" />
+  <text class="edge-label" x="415" y="75">呼び出し</text>
+
+  <path class="edge" d="M 530 119 L 530 165 L 320 165 L 320 119" marker-end="url(#arrow)" />
+  <text class="edge-label" x="425" y="180">レビュー</text>
+
+  <text class="sub" x="320" y="30">すべてのターンではなく, 要所でだけ相談する</text>
+</svg>
