@@ -28,3 +28,11 @@ Japanese drafts in `posts/` and `pages/` follow the `japanese-tech-writing` skil
 Use a figure or a table where it carries the structure better than prose: comparing configurations, listing options and their roles, or showing how traffic moves between components. The prose explains why the structure is that way and does not restate the table.
 
 Figures follow `diagrams/README.md`; tables use Pandoc pipe tables.
+
+## Link cards
+
+A link card is an image that links to the page it previews, and it loads the preview from the page or its image CDN rather than from a committed file.
+Write it as `[![alt](<image URL>)](<page URL>)`, using the page's `og:image` or another preview image the page serves.
+For GitHub, prefer the `og:image` URL from the repository page, which has the form `https://opengraph.githubassets.com/<hash>/<owner>/<repo>`; the `/1/` shortcut is a fallback and can be rate-limited.
+The URL is fixed in the post, so the card does not follow a later change to the page's `og:image`.
+Do not download previews into `assets/images/`; that directory holds figures.

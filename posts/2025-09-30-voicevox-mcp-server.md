@@ -10,6 +10,8 @@ tags:
 [`voicevox-cli`](https://github.com/usabarashi/voicevox-cli) は, 私が作っている CLI で, VOICEVOX Core を使った日本語の **TTS**（text-to-speech）を行います.
 同じリポジトリから `voicevox-mcp-server` という実行ファイルもビルドでき, **MCP**（Model Context Protocol）のクライアントから音声合成を呼べます.
 
+[![usabarashi/voicevox-cli のリポジトリカード](https://opengraph.githubassets.com/d50d3b7b5ef71bac342422e0be39193c46b16c91ad256d50daa7838719ec1a08/usabarashi/voicevox-cli)](https://github.com/usabarashi/voicevox-cli)
+
 ## プロセスの分割
 
 この構成では, MCP クライアントを内包するホストアプリ, MCP サーバ, `voicevox-daemon` のあいだに 2 つの境界があります.
@@ -123,9 +125,9 @@ WAV を base64 にすると, データは約 4/3 倍に膨らみます.
 
 ホストアプリや MCP クライアントからの通知に頼らず再生を止める手段も, 今後の検討課題です.
 
-## リンク
+## References
 
-- リポジトリ： [usabarashi/voicevox-cli](https://github.com/usabarashi/voicevox-cli)
-- MCP サーバのドキュメント： [docs/mcp-usage.md](https://github.com/usabarashi/voicevox-cli/blob/main/docs/mcp-usage.md)
-- MCP の仕様： [2025-06-18](https://modelcontextprotocol.io/specification/2025-06-18)
-- VOICEVOX の公式サイト： [voicevox.hiroshiba.jp](https://voicevox.hiroshiba.jp/)
+- [usabarashi/voicevox-cli](https://github.com/usabarashi/voicevox-cli)
+- [MCP サーバのドキュメント](https://github.com/usabarashi/voicevox-cli/blob/main/docs/mcp-usage.md)
+- [MCP の仕様: 2025-06-18](https://modelcontextprotocol.io/specification/2025-06-18)
+- [VOICEVOX の公式サイト](https://voicevox.hiroshiba.jp/)

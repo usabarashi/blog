@@ -14,6 +14,8 @@ UPS もその 1 つで, APC の GS Pro 500 には設定用の API がなく, SNM
 IaC で管理したいので, 管理画面の HTML から設定を読み取り, フォームを送信する Terraform Provider を作りました.
 個人利用のためのツールなので, ソースコードは公開していません.
 
+[![HashiCorp の Terraform Provider 作成チュートリアル](https://developer.hashicorp.com/og-image/terraform.jpg)](https://developer.hashicorp.com/terraform/tutorials/providers-plugin-framework)
+
 ## UPS の設定を IaC に載せる
 
 UPS の設定は, 停電したときに何をどの順で止めるか, スマートコンセントの起動をどれだけ遅らせるか, 監視の宛先をどこにするかといったものです.
@@ -217,6 +219,8 @@ Delete は state から消すだけで, GS Pro 500 の設定は変えません.
 
 ## [Self-hosted agents](https://developer.hashicorp.com/validated-designs/terraform/administration-guide/self-hosted-agents)
 
+[![HashiCorp の self-hosted agents のドキュメント](https://developer.hashicorp.com/og-image/terraform.jpg)](https://developer.hashicorp.com/terraform/cloud-docs/agents/agents)
+
 Terraform Provider は Terraform のプラグインで, plan と apply を実行するホストの上で動きます.
 GS Pro 500 へはそのホストから HTTP で接続するので, 実行する場所は GS Pro 500 に届くネットワークでなければなりません.
 GS Pro 500 のアドレスは LAN の中にしかありません.
@@ -260,6 +264,8 @@ terraform {
 ![plan / apply 時の認証情報と state の流れ](/images/2026-02-22-terraform-provider-apc-credentials.svg)
 
 この構成では, Terraform Provider を HCP Terraform のプライベートレジストリ経由で配布するので, ビルドしたバイナリの配布情報をレジストリに登録しています.
+
+[![HashiCorp の private registry のドキュメント](https://developer.hashicorp.com/og-image/terraform.jpg)](https://developer.hashicorp.com/terraform/cloud-docs/registry)
 
 ビルドと登録は, 自前の GitHub Actions のワークフローで行っています.
 GitHub のリポジトリにタグを push するとワークフローが起動し, GoReleaser でバイナリのアーカイブを作り, チェックサムファイルに GPG 署名します.
@@ -316,3 +322,14 @@ UPS 側には認証情報を置かず, 上流の認証情報は中継だけが�
   同じプロセスで複数の Provider 設定を使うと接続先や認証情報が混ざるおそれがあるため, Provider alias を使った複数台の管理には対応していません.
 - この Terraform Provider で設定を管理しても, バッテリの保守は別に必要です.
   交換時期はメーカーの案内に従って確認します.
+
+## References
+
+- [Custom Framework Providers](https://developer.hashicorp.com/terraform/tutorials/providers-plugin-framework)
+- [Terraform Plugin Framework](https://developer.hashicorp.com/terraform/plugin/framework)
+- [HCP Terraform agents](https://developer.hashicorp.com/terraform/cloud-docs/agents/agents)
+- [Private registry](https://developer.hashicorp.com/terraform/cloud-docs/registry)
+- [Self-hosted agents (Validated Design)](https://developer.hashicorp.com/validated-designs/terraform/administration-guide/self-hosted-agents)
+- [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp)
+- [GoReleaser](https://goreleaser.com/)
+- [sops-nix](https://github.com/Mic92/sops-nix)
