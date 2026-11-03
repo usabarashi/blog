@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 240" role="img" width="672" height="240">
+  <title>SwiftBar plugin, switch script and llama-server</title>
+  <style>
+    .bg { fill: #ffffff; }
+    .box { fill: #e6e6e6; stroke: #333333; stroke-width: 1.5; }
+    .edge { stroke: #333333; stroke-width: 1.5; fill: none; }
+    .dash { stroke-dasharray: 5 4; }
+    .label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; fill: #222222; text-anchor: middle; }
+    .sub { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+    .edge-label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="672" height="240" fill="#ffffff" />
+
+  <rect class="box" x="20" y="45" width="170" height="70" rx="5" />
+  <text class="label" x="105" y="75">SwiftBar plugin</text>
+  <text class="sub" x="105" y="95">menu bar / 5 s render</text>
+
+  <rect class="box" x="260" y="45" width="170" height="70" rx="5" />
+  <text class="label" x="345" y="75">switch-to.sh</text>
+  <text class="sub" x="345" y="95">Nix store path</text>
+
+  <rect class="box" x="470" y="45" width="182" height="70" rx="5" />
+  <text class="label" x="561" y="75">llama-server</text>
+  <text class="sub" x="561" y="95">API + Web UI / :18080</text>
+
+  <rect class="box" x="470" y="165" width="182" height="60" rx="5" />
+  <text class="label" x="561" y="192">clients</text>
+  <text class="sub" x="561" y="210">coding agent, browser</text>
+
+  <line class="edge" x1="190" y1="80" x2="260" y2="80" marker-end="url(#arrow)" />
+  <text class="edge-label" x="225" y="67">start / stop</text>
+
+  <line class="edge" x1="430" y1="80" x2="470" y2="80" marker-end="url(#arrow)" />
+  <text class="edge-label" x="450" y="67">exec</text>
+
+  <line class="edge" x1="561" y1="165" x2="561" y2="115" marker-end="url(#arrow)" />
+  <text class="edge-label" x="551" y="145" text-anchor="end">/v1 + Web UI</text>
+
+  <path class="edge dash" d="M 105 45 L 105 22 L 561 22 L 561 45" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+  <text class="edge-label" x="333" y="15">GET /health</text>
+</svg>
