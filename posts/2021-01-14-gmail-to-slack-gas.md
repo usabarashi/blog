@@ -15,7 +15,7 @@ tags:
 
 ## GAS とポーリング
 
-[![Google Apps Script の公式ページ](https://lh3.googleusercontent.com/w0vOEA6oQj_rvcnP8SipWw4_gz5e_RH2La5ZEx4rHVvaoL4PSqLDeE5y7uSgAVMHNE6LaSIm_DOQZiWKXHgGYbbzbBKbHBiHGNTDAw=e365-pa-nu-rw-w1024)](https://workspace.google.com/products/apps-script/)
+[![Google Apps Script の公式ページ](/images/2021-01-14-gmail-to-slack-gas-card.png)](https://workspace.google.com/products/apps-script/)
 
 時間主導のトリガーで 1 分ごとに Gmail を検索し, 一致する未読メールを Slack に投稿します.
 投稿したスレッドは既読にし, その Message-ID を Cloud Logging に記録します.
@@ -33,7 +33,7 @@ GAS は Google の環境で動き, `GmailApp` からメールを検索し, `UrlF
 既読化に `gmail.modify` を使うため, 読み取りだけの `gmail.readonly` より権限は広くなります.
 
 未読メールを検索する**ポーリング**で通知を拾います.
-通知は通常 1 分ほどで届きます.
+Slack には通常 1 分以内に届きます.
 トリガーの起動は Google 側の都合で遅れることがあります.
 
 ## Gmail の検索と未読キュー
@@ -60,7 +60,7 @@ export const handler = () => {
 
 ![未読のスレッドを選び, スレッド内の全メッセージを投稿する流れ](/images/2021-01-14-gmail-to-slack-queue.svg)
 
-図は, 未読のメッセージを 1 つ含むスレッドが選ばれ, 既読のメッセージも含めて投稿されることを示しています.
+図は, スレッド A の A1 と A2, スレッド B の B1 を例にしています.
 
 検索条件には `is:unread` を含めます.
 すると, 未読のスレッドだけが次回の検索対象になります.
@@ -95,7 +95,7 @@ is:unread from:alerts@example.com
 
 ## Slack への投稿
 
-[![Slack の公式ページ](https://a.slack-edge.com/73a2348/marketing/img/homepage/revamped-24/unfurl/hp-revamp-unfurl.ja-JP.jpg)](https://slack.com/)
+[![Slack の公式ページ](/images/2021-01-14-gmail-to-slack-slack-card.jpg)](https://slack.com/)
 
 Slack へは **Incoming Webhook**（チャンネルに投稿するための URL）に JSON を POST します.
 1 チャンネルに投稿するだけなら, Slack アプリの OAuth を設定して `chat.postMessage` を呼ぶより簡単です.
@@ -248,7 +248,6 @@ GAS の画面で変更した場合は, その内容を `src/main.ts` に反映�
 
 ## References
 
-- [Apps Script のクォータ](https://developers.google.com/apps-script/guides/services/quotas)
 - [Gmail の検索演算子](https://support.google.com/mail/answer/7190?hl=ja)
 - [RFC 5322: Message-ID](https://www.rfc-editor.org/rfc/rfc5322#section-3.6.4)
 - [Slack Incoming Webhooks](https://api.slack.com/messaging/webhooks)
