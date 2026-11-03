@@ -4,7 +4,7 @@ date: "2026-01-02"
 tags:
   - Chrome
   - Gemini Nano
-  - TypeScript
+  - PureScript
   - WebExtensions
 ---
 
@@ -12,7 +12,7 @@ X（旧 Twitter）のタイムラインから攻撃的なポストを取り除�
 キーワードや固定ルールだけでは文脈を踏まえた判定が難しいため, Chrome に組み込まれた Gemini Nano を端末内で動かす Chrome 拡張を作りました.
 条件に合うポストはそのまま表示し, 合わないポストは内容を隠してプレースホルダーに置き換えます.
 
-[![usabarashi/tweet-filter-with-gemini-nano のリポジトリカード](https://opengraph.githubassets.com/1/usabarashi/tweet-filter-with-gemini-nano)](https://github.com/usabarashi/tweet-filter-with-gemini-nano)
+[![usabarashi/tweet-filter-with-gemini-nano のリポジトリカード](/images/2026-01-02-tweet-filter-gemini-nano-repo-card.png)](https://github.com/usabarashi/tweet-filter-with-gemini-nano)
 
 ## フィルタの動作
 
@@ -30,7 +30,7 @@ X（旧 Twitter）のタイムラインから攻撃的なポストを取り除�
 
 [![The Prompt API（Gemini Nano）の公式ドキュメント](https://developer.chrome.com/static/docs/ai/prompt-api/images/cover.png)](https://developer.chrome.com/docs/ai/prompt-api)
 
-Chrome の Gemini Nano は, `LanguageModel` というグローバルから使います.
+Chrome の Gemini Nano は, `LanguageModel` というグローバルオブジェクトから使います.
 この拡張の manifest では, `minimum_chrome_version` を `131` にしていますが, この指定だけで Prompt API を使えるとは限りません.
 評価には `LanguageModel` を使える環境が必要です.
 
@@ -53,17 +53,17 @@ Chrome の Gemini Nano は, `LanguageModel` というグローバルから使い
 次の 4 段階を短絡評価します.
 条件に一致した時点でポストを表示し, 残りの段階は評価しません.
 不一致なら次の段階へ進み, 実行した段階がすべて不一致なら隠します.
-条件判定の応答の解析や判定処理で例外が出た場合も, ポストを表示し, 残りの段階は評価しません.
+条件判定で例外が出た場合も, ポストを表示し, 残りの段階は評価しません.
 テキストが空の段階と画像がない段階は飛ばし, どの段階も実行できなければポストを表示します.
 
-| 順序 | 対象 | プロンプトに渡す内容 |
+| # | 対象 | プロンプトに渡す内容 |
 |---|---|---|
 | 1 | 本文 | ポスト本文 |
 | 2 | 引用元の本文 | `[Quoting @user: ...]` の形にした本文 |
 | 3 | 引用元の画像 | 画像から生成した説明文 |
 | 4 | ポスト本体の画像 | 画像から生成した説明文 |
 
-プロンプトに条件と対象のテキストを埋め込み, `{"show": true}` か `{"show": false}` の JSON だけを返すように指示します.
+プロンプトに条件と対象のテキストを埋め込み, `show` という真偽値 1 つだけを返すように指示します.
 
 ```text
 Evaluate if this tweet matches the following criteria:
@@ -71,15 +71,12 @@ Evaluate if this tweet matches the following criteria:
 
 Tweet text: "<tweet text>"
 
-If the tweet MATCHES the criteria, respond: {"show": true}
-If the tweet does NOT match the criteria, respond: {"show": false}
-
-Response (JSON only):
+Return JSON only with one boolean field named show.
+Do not include any other keys or explanation.
 ```
 
-応答から `{"show":` に続く `true` か `false` を探します.
-見つからなければ JSON として解析し, `show` が真偽値の `true` かどうかで判定します.
-応答の解析や判定処理で例外が出た場合は, ポストを表示します.
+応答を小文字に揃え, 最後に現れる `"show"` の後ろの `:` が `true` か `false` かを見ます.
+どちらでもなければポストを表示します.
 
 引用元の作者名には `@` を付けます（すでに `@` で始まる場合は重ねません）.
 
@@ -87,7 +84,7 @@ Response (JSON only):
 対象は `pbs.twimg.com/media/` を含む URL だけで, `name=large` に正規化します.
 ポスト本体の画像は, 正規化した URL の重複を除きます.
 取得や説明の生成に失敗した画像は, 条件判定の対象から除きます. 説明を 1 つも得られない段階は実行しません.
-画像の取得は並列に行い, 説明生成のプロンプトは 1 枚ずつ実行します.
+画像は 1 枚ずつ取得して説明します.
 各画像段階では, その段階の説明文をまとめて 1 回の条件判定に渡します.
 
 ## 処理の組み立て
@@ -102,12 +99,14 @@ Response (JSON only):
 | **offscreen document** | Gemini Nano のセッションを保持し, 評価キューを実行する |
 | **options page** | フィルタ条件, 出力言語, モデルのダウンロードを扱う |
 
+::: {.scroll-figure}
 ![ポストの判定の流れ](/images/2026-01-02-tweet-filter-gemini-nano-flow.svg)
+:::
 
 図は正常時の処理を示しています. 失敗とタイムアウトの分岐は省き, 4 つの評価段階を 1 つにまとめています.
 
 service worker はアイドル状態になると停止することがあるため, セッションと評価キューは offscreen document に置きます.
-offscreen document は Window コンテキストを持ち, 対応環境では `LanguageModel` を利用できます.
+offscreen document は Window のグローバル環境を持ち, 対応環境では `LanguageModel` を利用できます.
 
 この実装では, `expectedInputs` にテキストと画像を指定して `LanguageModel.availability` を呼び出します.
 戻り値が `available` か `after-download` なら, テキストと画像を入力できるセッションを作ります.
@@ -124,7 +123,7 @@ offscreen document はキューに入った評価を順に実行します.
 
 content script は, キュー待ちを含めて評価の応答を最大 15 秒待ちます. タイムアウトした場合はポストを表示します.
 このタイムアウトでは offscreen document の評価はキャンセルしません. service worker が評価結果を受け取った場合は, キャッシュに保存します.
-プロンプトは 1 回ごとに 10 秒, 画像の取得は 1 枚ごとに 5 秒で中断を要求します.
+プロンプトは 1 回ごとに 10 秒, 画像の取得は 1 枚ごとに 5 秒で待つのをやめ, 失敗として扱います.
 
 ## 評価結果のキャッシュ
 
@@ -134,7 +133,7 @@ service worker は評価結果を `chrome.storage.session` にキャッシュし
 
 キャッシュはポスト ID をキーにした最大 500 件の LRU です.
 読み取り時にも LRU の順序を更新するため, キャッシュ操作が並行すると更新が競合する可能性があります.
-そこで, 更新を伴うキャッシュ操作を Promise チェーンで直列化しています.
+そこで, 更新を伴うキャッシュ操作をロックで直列化しています.
 
 キャッシュへの書き込みは, content script に応答を返す前に `await` します.
 書き込みの完了を確かめてから応答し, service worker の停止で未完了の書き込みが失われるリスクを減らすためです.
