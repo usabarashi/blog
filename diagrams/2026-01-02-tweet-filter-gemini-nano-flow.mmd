@@ -1,0 +1,22 @@
+%%{init: {"theme": "base", "themeVariables": {"fontFamily": "system-ui, -apple-system, Hiragino Sans, sans-serif", "fontSize": "14px", "primaryColor": "#e6e6e6", "primaryBorderColor": "#333333", "primaryTextColor": "#222222", "lineColor": "#333333", "actorBkg": "#e6e6e6", "actorBorder": "#333333", "actorTextColor": "#222222", "signalColor": "#333333", "signalTextColor": "#222222", "labelBoxBkgColor": "#f7f7f7", "labelBoxBorderColor": "#333333", "labelTextColor": "#222222", "loopTextColor": "#222222", "noteBkgColor": "#f7f7f7", "noteBorderColor": "#333333", "noteTextColor": "#222222", "activationBkgColor": "#e6e6e6", "activationBorderColor": "#333333"}, "sequence": {"mirrorActors": false}}}%%
+sequenceDiagram
+    participant CS as content script
+    participant SW as service worker
+    participant OD as offscreen document
+
+    Note over SW: cache in chrome.storage.session
+    Note over OD: session and queue
+
+    CS->>SW: evaluate
+    SW->>SW: look up cache
+    alt cache hit
+        SW-->>CS: shouldShow
+    else cache miss
+        SW->>OD: evaluate
+        OD->>OD: wait in queue
+        OD->>OD: evaluate with Gemini Nano
+        OD-->>SW: shouldShow
+        SW->>SW: store in cache
+        SW-->>CS: shouldShow
+    end
+    CS->>CS: show or collapse
