@@ -9,6 +9,7 @@ File names carry the post date as a prefix, the same way posts do, so an asset c
 | `2026-01-01-homelab-after.mmd` (Mermaid) | `assets/images/2026-01-01-homelab-after.svg` | `posts/2026-01-01-migrate-homelab.md` |
 | `2026-01-01-homelab-secrets.mmd` (Mermaid) | `assets/images/2026-01-01-homelab-secrets.svg` | `posts/2026-01-01-migrate-homelab.md` |
 | `2026-01-01-homelab-logs.mmd` (Mermaid) | `assets/images/2026-01-01-homelab-logs.svg` | `posts/2026-01-01-migrate-homelab.md` |
+| `2026-01-02-tweet-filter-gemini-nano-flow.mmd` (Mermaid) | `assets/images/2026-01-02-tweet-filter-gemini-nano-flow.svg` | `posts/2026-01-02-tweet-filter-gemini-nano.md` |
 | `2026-02-22-terraform-provider-apc-agents.mmd` (Mermaid) | `assets/images/2026-02-22-terraform-provider-apc-agents.svg` | `posts/2026-02-22-terraform-provider-apc.md` |
 | `2026-02-22-terraform-provider-apc-mail-relay.mmd` (Mermaid) | `assets/images/2026-02-22-terraform-provider-apc-mail-relay.svg` | `posts/2026-02-22-terraform-provider-apc.md` |
 | `2026-02-22-terraform-provider-apc-credentials.mmd` (Mermaid) | `assets/images/2026-02-22-terraform-provider-apc-credentials.svg` | `posts/2026-02-22-terraform-provider-apc.md` |

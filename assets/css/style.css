@@ -287,3 +287,17 @@ hr {
 math {
   font-size: 1.05em;
 }
+
+@media (max-width: 30rem) {
+  .scroll-figure {
+    overflow-x: auto;
+  }
+
+  .scroll-figure figure {
+    margin: 1em 0;
+  }
+
+  .scroll-figure img {
+    max-width: none;
+  }
+}
