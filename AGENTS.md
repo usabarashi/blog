@@ -18,6 +18,13 @@ Naming a product the article is about (Gmail, Terraform) is not a personal detai
 
 Japanese drafts in `posts/` and `pages/` follow the `japanese-tech-writing` skill.
 
+- Write the prose in ですます調 (「〜します」「〜です」), matching the published articles. Do not use the だ/である style.
 - Avoid contrived, roundabout phrasing. Design decisions are fine when stated plainly; do not stage them with setup or narrate the effort behind them.
   - Bad: 「API の機能だけでは, タイムラインのフィルタは作れません. セッションをどこに置き, どの単位で作り, 複数の判定をどう順序づけるかを決める必要がありました.」
   - Good: 「セッションは offscreen document に置きます. service worker はアイドル状態になると停止するためです.」
+
+## Figures and tables
+
+Use a figure or a table where it carries the structure better than prose: comparing configurations, listing options and their roles, or showing how traffic moves between components. The prose explains why the structure is that way and does not restate the table.
+
+Figures follow `diagrams/README.md`; tables use Pandoc pipe tables.

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 260" role="img" width="672" height="260">
+  <title>DNS and DHCP paths from LAN clients to AdGuard Home</title>
+  <style>
+    .bg { fill: #ffffff; }
+    .box { fill: #e6e6e6; stroke: #333333; stroke-width: 1.5; }
+    .host { fill: #f7f7f7; stroke: #333333; stroke-width: 1.5; }
+    .edge { stroke: #333333; stroke-width: 1.5; fill: none; }
+    .label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; fill: #222222; text-anchor: middle; }
+    .edge-label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 13px; fill: #444444; text-anchor: middle; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="672" height="260" fill="#ffffff" />
+
+  <rect class="host" x="200" y="24" width="344" height="212" rx="8" />
+  <text class="label" x="372" y="48">Host (Debian)</text>
+  <text class="label" x="372" y="68">br0 &lt;HOST_IP&gt;</text>
+
+  <rect class="box" x="16" y="100" width="112" height="56" rx="5" />
+  <text class="label" x="72" y="132">LAN clients</text>
+
+  <rect class="box" x="224" y="84" width="296" height="112" rx="5" />
+  <text class="label" x="372" y="108">AdGuard Home</text>
+  <text class="label" x="372" y="128">host network namespace</text>
+  <text class="label" x="372" y="150">DNS :53 / DHCP :67</text>
+  <text class="label" x="372" y="170">UI :8080</text>
+
+  <rect class="box" x="580" y="100" width="92" height="56" rx="5" />
+  <text class="label" x="626" y="124">Upstream</text>
+  <text class="label" x="626" y="144">DNS (DoH)</text>
+
+  <line class="edge" x1="128" y1="120" x2="224" y2="110" marker-end="url(#arrow)" />
+  <text class="edge-label" x="170" y="100">DNS :53</text>
+  <line class="edge" x1="128" y1="136" x2="224" y2="170" marker-end="url(#arrow)" />
+  <text class="edge-label" x="166" y="188">DHCP :67</text>
+  <line class="edge" x1="520" y1="140" x2="580" y2="140" marker-end="url(#arrow)" />
+  <text class="edge-label" x="556" y="128">DoH</text>
+</svg>
