@@ -6,6 +6,7 @@ File names carry the post date as a prefix, the same way posts do, so an asset c
 | Source | Output | Used by |
 |---|---|---|
 | none (hand-written SVG) | `assets/images/2026-10-14-pi-advisor-flow.svg` | `posts/2026-10-14-switch-to-pi-coding-agent.md` |
+| none (hand-written SVG) | `assets/images/2026-07-26-llamacpp-qwen-swiftbar.svg` | `posts/2026-07-26-llamacpp-qwen-swiftbar.md` |
 | `2026-02-22-terraform-provider-apc-agents.mmd` (Mermaid) | `assets/images/2026-02-22-terraform-provider-apc-agents.svg` | `posts/2026-02-22-terraform-provider-apc.md` |
 | `2026-02-22-terraform-provider-apc-mail-relay.mmd` (Mermaid) | `assets/images/2026-02-22-terraform-provider-apc-mail-relay.svg` | `posts/2026-02-22-terraform-provider-apc.md` |
 | `2026-02-22-terraform-provider-apc-credentials.mmd` (Mermaid) | `assets/images/2026-02-22-terraform-provider-apc-credentials.svg` | `posts/2026-02-22-terraform-provider-apc.md` |
