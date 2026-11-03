@@ -20,7 +20,7 @@ tags:
 そのなかで, Pi Coding Agent が複数のプロバイダの LLM を直接扱え, MCP にも対応したことが, 切り替えの大きなきっかけになりました.
 プライベート環境では Pi を入れてから同じ日のうちにほかの 4 つを外し, いまは Pi だけを使っています.
 
-[![earendil-works/pi のリポジトリカード](https://opengraph.githubassets.com/1/earendil-works/pi)](https://github.com/earendil-works/pi)
+[![earendil-works/pi のリポジトリカード](https://opengraph.githubassets.com/ce0ce9c81d558282ea28d36a337a201ce658f1ed2fffeeac968528bd6f6a01da/earendil-works/pi)](https://github.com/earendil-works/pi)
 
 ## フロンティアモデルの品質を要所で得る
 
@@ -43,7 +43,7 @@ skills とサンドボックスは以前から共通化していたので, こ�
 開発環境は, nix-config リポジトリの Nix flake で管理しています.
 Pi のパッケージと設定もここにまとめています.
 
-[![usabarashi/nix-config のリポジトリカード](https://opengraph.githubassets.com/1/usabarashi/nix-config)](https://github.com/usabarashi/nix-config)
+[![usabarashi/nix-config のリポジトリカード](https://opengraph.githubassets.com/1564b0c5ab8728bdb03e89694657d33bd7feba4f7c77de9217b33790275fb353/usabarashi/nix-config)](https://github.com/usabarashi/nix-config)
 
 この Nix パッケージでは, 配布されている standalone の tarball を `fetchurl` で固定し, アセットごと `libexec` に置いています.
 バイナリがアセットを同じディレクトリから探すためです.

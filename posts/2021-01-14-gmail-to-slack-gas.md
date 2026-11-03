@@ -15,7 +15,7 @@ tags:
 
 ## GAS とポーリング
 
-[![Google Apps Script の公式ページ](/images/2021-01-14-gmail-to-slack-gas-card.png)](https://workspace.google.com/products/apps-script/)
+[![Google Apps Script の公式ページ](https://lh3.googleusercontent.com/w0vOEA6oQj_rvcnP8SipWw4_gz5e_RH2La5ZEx4rHVvaoL4PSqLDeE5y7uSgAVMHNE6LaSIm_DOQZiWKXHgGYbbzbBKbHBiHGNTDAw=e365-pa-nu-rw-w1024)](https://workspace.google.com/products/apps-script/)
 
 時間主導のトリガーで 1 分ごとに Gmail を検索し, 一致する未読メールを Slack に投稿します.
 投稿したスレッドは既読にし, その Message-ID を Cloud Logging に記録します.
@@ -95,7 +95,7 @@ is:unread from:alerts@example.com
 
 ## Slack への投稿
 
-[![Slack の公式ページ](/images/2021-01-14-gmail-to-slack-slack-card.jpg)](https://slack.com/)
+[![Slack の公式ページ](https://a.slack-edge.com/73a2348/marketing/img/homepage/revamped-24/unfurl/hp-revamp-unfurl.ja-JP.jpg)](https://slack.com/)
 
 Slack へは **Incoming Webhook**（チャンネルに投稿するための URL）に JSON を POST します.
 1 チャンネルに投稿するだけなら, Slack アプリの OAuth を設定して `chat.postMessage` を呼ぶより簡単です.

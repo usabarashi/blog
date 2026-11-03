@@ -13,7 +13,7 @@ tags:
 DNS で広告とトラッカーのドメインをブロックしています.
 各端末にこの DNS サーバを使わせるために, DHCP で DNS サーバのアドレスを配っています.
 
-[![AdguardTeam/AdGuardHome のリポジトリカード](https://opengraph.githubassets.com/1/AdguardTeam/AdGuardHome)](https://github.com/AdguardTeam/AdGuardHome)
+[![AdguardTeam/AdGuardHome のリポジトリカード](https://opengraph.githubassets.com/cfdc43ab5ef048cd8f17d526c5ea17364dbb27e81c418fec3788a6a0d793bb78/AdguardTeam/AdGuardHome)](https://github.com/AdguardTeam/AdGuardHome)
 
 ## DNS で広告を止める
 

@@ -11,7 +11,7 @@ tags:
 受信するメールの種類が増えると, どのフィルタがどのメールに効いているかを画面から追うことになります.
 フィルタとラベルの定義を, バージョン管理できるファイルに移し, **gmailctl** で Gmail に反映するようにしました.
 
-[![mbrt/gmailctl のリポジトリカード](https://opengraph.githubassets.com/1/mbrt/gmailctl)](https://github.com/mbrt/gmailctl)
+[![mbrt/gmailctl のリポジトリカード](https://opengraph.githubassets.com/676825f4a8c1ecc30d61ef09672cea078d6b05219a5560e6e090d729966b57c3/mbrt/gmailctl)](https://github.com/mbrt/gmailctl)
 
 ## gmailctl のコマンド
 

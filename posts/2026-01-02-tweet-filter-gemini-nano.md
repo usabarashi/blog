@@ -12,7 +12,7 @@ X（旧 Twitter）のタイムラインから攻撃的なポストを取り除�
 キーワードや固定ルールだけでは文脈を踏まえた判定が難しいため, Chrome に組み込まれた Gemini Nano を端末内で動かす Chrome 拡張を作りました.
 条件に合うポストはそのまま表示し, 合わないポストは内容を隠してプレースホルダーに置き換えます.
 
-[![usabarashi/tweet-filter-with-gemini-nano のリポジトリカード](https://opengraph.githubassets.com/1/usabarashi/tweet-filter-with-gemini-nano)](https://github.com/usabarashi/tweet-filter-with-gemini-nano)
+[![usabarashi/tweet-filter-with-gemini-nano のリポジトリカード](https://opengraph.githubassets.com/6be4571a030a02a3e0d0aecc8385c6b0d591f4ab9505d00a1c66e0f338607c9d/usabarashi/tweet-filter-with-gemini-nano)](https://github.com/usabarashi/tweet-filter-with-gemini-nano)
 
 ## フィルタの動作
 

@@ -13,8 +13,6 @@ tags:
 
 ![移行前後の筐体サイズ比較](/images/2026-01-01-homelab-size.svg)
 
-この記事には, 移行時点の構成だけでなく, その後に追加したログ転送や監視, CI の構成も含みます.
-
 ## 移行の動機と踏み切れた理由
 
 動機は3つあります.
@@ -99,10 +97,14 @@ CPU は AES の暗号処理を高速化する AES-NI に対応しており, 対�
 NixOS を入れ, OS とサービスの構成は 1 つの flake に書いています.
 データ, Secure Boot の鍵登録, TPM2 へのバインドは Nix の外で扱っています.
 
+[![NixOS の公式サイト](https://nixos.org/index.webp)](https://nixos.org/)
+
 実行基盤として変えたのは, インストールと起動, ランタイムの隔離, デプロイの方式です.
 以下では, この3つに続けて秘密情報と監視も扱います.
 
 ## インストールと起動
+
+[![nix-community/disko のリポジトリカード](https://opengraph.githubassets.com/1/nix-community/disko)](https://github.com/nix-community/disko)
 
 ディスクは `disko` の記述からパーティションを作るようにしました.
 ESP を作り, 残りの領域を LUKS2 で暗号化しています.
@@ -128,6 +130,9 @@ disk.root = {
 インストールには `nixos-anywhere` を使います.
 対象ホストをライブ USB の NixOS インストール環境で起動しておく方法と, 既存の Linux から kexec でインストール環境へ移る方法があります.
 kexec が使えるかどうかは, Secure Boot や実行中のカーネルの制約にも依存します.
+
+[![nix-community/nixos-anywhere のリポジトリカード](https://opengraph.githubassets.com/b77c87c22f3a026220282ad8a368cfa5f45b05203f9a6cf1372bc8dc1293a935/nix-community/nixos-anywhere)](https://github.com/nix-community/nixos-anywhere)
+
 TPM2 による自動解錠も設定しました.
 initrd で Clevis が TPM2 を使って LUKS を自動解錠し, 自動解錠に失敗した場合はパスフレーズの入力に切り替わります.
 Secure Boot は `lanzaboote` で有効にし, 鍵は `sbctl` で管理しています.
@@ -176,6 +181,8 @@ deploy --remote-build 'path:.#<HOST>'
 
 `<HOST>` は flake に定義したデプロイ対象の名前に置き換えます.
 
+[![serokell/deploy-rs のリポジトリカード](https://opengraph.githubassets.com/24423af2a6faefdb53164dac0dcd14fdbd3fdf2e2839153a0acdd87dd81dad1c/serokell/deploy-rs)](https://github.com/serokell/deploy-rs)
+
 起動メニューに残っている前の世代を選ぶと, システム構成を戻せます.
 ただし, サービスのデータや更新時のマイグレーションまで戻るわけではありません.
 起動メニューに載せる世代数は, `boot.loader.systemd-boot.configurationLimit` で最大3世代にしています.
@@ -193,6 +200,8 @@ deploy --remote-build 'path:.#<HOST>'
 復号されたファイルは `/run/secrets` に置かれ, ユニットは `EnvironmentFile` から読みます.
 環境変数としてまとめたい場合は, `sops.templates` で `/run` 以下に環境ファイルを生成します.
 CI はプライベートリポジトリに触れずに評価できるよう, input を `nix/secrets-dummy` に差し替え, `validateSopsFiles` を切ります.
+
+[![Mic92/sops-nix のリポジトリカード](https://opengraph.githubassets.com/37bb477bfc07af35544065a47b1382a52e7193f3892edb172b8f8aacd799d59d/Mic92/sops-nix)](https://github.com/Mic92/sops-nix)
 
 ## ログの保存と障害通知
 
@@ -235,3 +244,12 @@ NVMe の温度, `critical_warning`, メディアエラー, 寿命の消費率, C
 コミット ID だけではデプロイした構成を特定できないため, マージ済みのコミットを入力にする自動デプロイにしたいと考えています.
 CI はホストの self-hosted runner で動いているので, ビルドを任せる場所はもうあります.
 反映したコミットをホスト側で確かめられるところまでをセットにしたいところです.
+
+## References
+
+- [NixOS](https://nixos.org/)
+- [disko](https://github.com/nix-community/disko)
+- [deploy-rs](https://github.com/serokell/deploy-rs)
+- [nixos-anywhere](https://github.com/nix-community/nixos-anywhere)
+- [lanzaboote](https://github.com/nix-community/lanzaboote)
+- [sops-nix](https://github.com/Mic92/sops-nix)
