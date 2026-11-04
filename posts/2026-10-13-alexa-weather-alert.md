@@ -57,9 +57,9 @@ Alexa が状態を問い合わせたときに開いていると答えるため�
 |---|---|---|
 | `rain_soon` | 雨雲接近 | 15 分以内に 1 mm/h 以上の雨 |
 | `heavy_rain_soon` | 大雨接近 | 15 分以内に 20 mm/h 以上の雨 |
-| `warning_lv3` | 気象警報 | 警報（警戒レベル3相当を含む） |
-| `warning_lv4` | 危険警報 | 危険警報（警戒レベル4） |
-| `warning_lv5` | 特別警報 | 特別警報（警戒レベル5） |
+| `warning_lv3` | 気象警報 | 警報 (警戒レベル3相当を含む) |
+| `warning_lv4` | 危険警報 | 危険警報 (警戒レベル4) |
+| `warning_lv5` | 特別警報 | 特別警報 (警戒レベル5) |
 
 5 つのセンサーの id は固定しています.
 id を変えると, 作った定型アクションとの対応が切れるためです.
@@ -69,8 +69,8 @@ id を変えると, 作った定型アクションとの対応が切れるため
 
 | 設定 | 既定値 | 意味 |
 |---|---|---|
-| 雨のしきい値 | 1 mm/h | 1〜5 mm/h の階級の下限 |
-| 強い雨のしきい値 | 20 mm/h | 20〜30 mm/h の階級の下限 |
+| 雨のしきい値 | 1 mm/h | 1-5 mm/h の階級の下限 |
+| 強い雨のしきい値 | 20 mm/h | 20-30 mm/h の階級の下限 |
 | 予報を見る範囲 | 15 分 | 直近の基準時刻から 15 分先まで |
 | 抑制する時間 | 90 分 | 開いたあと同じ条件では知らせない |
 | 抑制を解除する無降雨時間 | 30 分 | これだけ雨が降らなければ再び知らせる |
@@ -97,7 +97,7 @@ https://www.jma.go.jp/bosai/jmatile/data/nowc/{basetime}/none/{validtime}/surf/h
 
 PNG の色は降水強度の階級を表しています.
 配色指針にある 8 つの階級の色を, 各階級の下限値 (mm/h) に対応させます.
-いちばん色が薄い階級 (0〜1 mm/h) は 0.1 mm/h として扱うので, しきい値が 1 mm/h の場合は通知の対象になりません.
+いちばん色が薄い階級 (0-1 mm/h) は 0.1 mm/h として扱うので, しきい値が 1 mm/h の場合は通知の対象になりません.
 タイルからは階級より細かい値が分からないため, しきい値は階級の下限値に合わせています.
 15 分ぶんのフレームの最大値を取り, しきい値と比べます.
 
@@ -114,11 +114,11 @@ JSON は発表の配列で, `dataTypeCode` が `VPWW55` から `VPWW61` のも�
 
 | コード | 扱い |
 |---|---|
-| 02〜09 | 警報（警戒レベル3相当を含む） |
-| 43, 48, 49 | 危険警報（警戒レベル4） |
-| 32, 33, 35〜39 | 特別警報（警戒レベル5） |
-| 00, 10, 12〜27, 29 | 注意報と解除. 対象外 |
-| 42, 45〜47 | 名前のない予約領域. 対象外 |
+| 02-09 | 警報 (警戒レベル3相当を含む) |
+| 43, 48, 49 | 危険警報 (警戒レベル4) |
+| 32, 33, 35-39 | 特別警報 (警戒レベル5) |
+| 00, 10, 12-27, 29 | 注意報と解除. 対象外 |
+| 42, 45-47 | 名前のない予約領域. 対象外 |
 | その他 | 対象外. レベルを推測せず, ログに残す |
 
 `status` が `解除` か `発表警報・注意報はなし` のものは除きます.
@@ -226,7 +226,7 @@ $ aws lambda invoke --function-name weather-alert \
 
 ## 雑感
 
-デプロイは自動化できましたが, 資格情報のまわりは手作業の比重が大きく感じました.
+デプロイは自動化できましたが, 資格情報のまわりは手作業の比重が大きいと感じました.
 手順に慣れていないこともありました.
 すべてを宣言的には管理できないため, Alexa スキルの開発を頻繁に行いたいとは思いません.
 
@@ -235,6 +235,8 @@ $ aws lambda invoke --function-name weather-alert \
 - [気象庁 高解像度降水ナウキャスト](https://www.jma.go.jp/bosai/nowc/)
 - [気象庁 気象警報・注意報](https://www.jma.go.jp/bosai/warning/)
 - [配信資料に関する技術情報 第634号](https://www.data.jma.go.jp/suishin/jyouhou/pdf/634.pdf)
-- [気象警報・注意報（Ｒ０６）別表3](https://dmdata.jp/docs/jma/manual/0206-0206_appendix.pdf)
+- [気象警報・注意報 (R06) 別表3](https://dmdata.jp/docs/jma/manual/0206-0206_appendix.pdf)
 - [気象庁 配色に関する設定指針](https://www.jma.go.jp/jma/kishou/info/colorguide/HPColorGuide_202007.pdf)
 - [Alexa Smart Home Skill API: Send Events](https://developer.amazon.com/en-US/docs/alexa/smarthome/send-events.html)
+- [Integrate Your Custom Task with Alexa Routines](https://developer.amazon.com/en-US/docs/alexa/custom-skills/integrate-custom-task-with-alexa-routines.html)
+- [Test Your Custom Task with Alexa Routines](https://developer.amazon.com/en-US/docs/alexa/custom-skills/test-custom-task-with-alexa-routines.html)
