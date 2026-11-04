@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 216" role="img" width="672" height="216">
+  <title>Two filter stages in one run: the ignore list, the Gemini decision, and where the kept posts go</title>
+  <style>
+    .bg { fill: #ffffff; }
+    .box { fill: #e6e6e6; stroke: #333333; stroke-width: 1.5; }
+    .edge { stroke: #333333; stroke-width: 1.5; fill: none; }
+    .label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; fill: #222222; text-anchor: middle; }
+    .sub { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+    .note { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="672" height="216" fill="#ffffff" />
+
+  <rect class="box" x="14" y="56" width="132" height="64" rx="5" />
+  <text class="label" x="80" y="84">Search results</text>
+  <text class="sub" x="80" y="104">one run</text>
+
+  <rect class="box" x="170" y="56" width="144" height="64" rx="5" />
+  <text class="label" x="242" y="84">Ignore list</text>
+  <text class="sub" x="242" y="104">author and text</text>
+
+  <rect class="box" x="338" y="56" width="136" height="64" rx="5" />
+  <text class="label" x="406" y="84">Gemini</text>
+  <text class="sub" x="406" y="104">one request</text>
+
+  <line class="edge" x1="146" y1="88" x2="170" y2="88" marker-end="url(#arrow)" />
+  <line class="edge" x1="314" y1="88" x2="338" y2="88" marker-end="url(#arrow)" />
+
+  <rect class="box" x="506" y="38" width="152" height="44" rx="5" />
+  <text class="label" x="582" y="65">posted to Slack</text>
+
+  <rect class="box" x="506" y="94" width="152" height="44" rx="5" />
+  <text class="label" x="582" y="121">dropped</text>
+
+  <path class="edge" d="M 474 80 L 490 80 L 490 60 L 506 60" marker-end="url(#arrow)" />
+  <path class="edge" d="M 474 96 L 490 96 L 490 116 L 506 116" marker-end="url(#arrow)" />
+
+  <text class="note" x="336" y="180">If the Gemini call fails, every post that passed the ignore list goes to Slack</text>
+</svg>
