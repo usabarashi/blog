@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 250" role="img" width="672" height="250">
+  <title>Browser, nginx, auth subrequest to oauth2-proxy, upstream, and Google</title>
+  <style>
+    .bg { fill: #ffffff; }
+    .box { fill: #e6e6e6; stroke: #333333; stroke-width: 1.5; }
+    .edge { stroke: #333333; stroke-width: 1.5; fill: none; }
+    .label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; fill: #222222; text-anchor: middle; }
+    .sub { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+    .edge-label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="672" height="250" fill="#ffffff" />
+
+  <rect class="box" x="16" y="40" width="140" height="64" rx="5" />
+  <text class="label" x="86" y="68">Browser</text>
+  <text class="sub" x="86" y="88">*.example.com</text>
+
+  <rect class="box" x="236" y="40" width="200" height="64" rx="5" />
+  <text class="label" x="336" y="68">nginx</text>
+  <text class="sub" x="336" y="88">443 / virtualHosts</text>
+
+  <rect class="box" x="516" y="40" width="140" height="64" rx="5" />
+  <text class="label" x="586" y="68">Service</text>
+  <text class="sub" x="586" y="88">loopback</text>
+
+  <rect class="box" x="236" y="166" width="200" height="64" rx="5" />
+  <text class="label" x="336" y="194">oauth2-proxy</text>
+  <text class="sub" x="336" y="214">127.0.0.1:4180</text>
+
+  <rect class="box" x="516" y="166" width="140" height="64" rx="5" />
+  <text class="label" x="586" y="194">Google</text>
+  <text class="sub" x="586" y="214">OIDC provider</text>
+
+  <line class="edge" x1="156" y1="72" x2="236" y2="72" marker-end="url(#arrow)" />
+  <text class="edge-label" x="196" y="62">HTTPS</text>
+
+  <line class="edge" x1="436" y1="72" x2="516" y2="72" marker-end="url(#arrow)" />
+  <text class="edge-label" x="476" y="62">proxy_pass</text>
+
+  <line class="edge" x1="336" y1="104" x2="336" y2="166" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+  <text class="edge-label" x="344" y="130" text-anchor="start">auth_request</text>
+  <text class="edge-label" x="328" y="148" text-anchor="end">2xx / 401</text>
+
+  <line class="edge" x1="436" y1="198" x2="516" y2="198" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+  <text class="edge-label" x="476" y="188">redirect</text>
+  <text class="edge-label" x="476" y="216">callback</text>
+
+  <text class="sub" x="336" y="240" text-anchor="middle">the auth subrequest runs before anything reaches the service</text>
+</svg>
