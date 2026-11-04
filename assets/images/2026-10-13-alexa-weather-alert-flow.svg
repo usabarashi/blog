@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 312" role="img" width="672" height="312">
+  <title>Weather alert flow: scheduler, Lambda, JMA data, DynamoDB, and the Alexa routine</title>
+  <style>
+    .bg { fill: #ffffff; }
+    .box { fill: #e6e6e6; stroke: #333333; stroke-width: 1.5; }
+    .edge { stroke: #333333; stroke-width: 1.5; fill: none; }
+    .label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; fill: #222222; text-anchor: middle; }
+    .sub { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+    .edge-label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="672" height="312" fill="#ffffff" />
+
+  <rect class="box" x="8" y="84" width="160" height="48" rx="5" />
+  <text class="label" x="88" y="104">EventBridge</text>
+  <text class="sub" x="88" y="122">every 5 minutes</text>
+
+  <rect class="box" x="200" y="60" width="208" height="96" rx="5" />
+  <text class="label" x="304" y="90">Lambda weather-alert</text>
+  <text class="sub" x="304" y="110">us-west-2</text>
+  <text class="sub" x="304" y="128">poll / smart home skill</text>
+
+  <rect class="box" x="456" y="16" width="200" height="48" rx="5" />
+  <text class="label" x="556" y="36">JMA rain nowcast</text>
+  <text class="sub" x="556" y="54">hrpns tiles</text>
+
+  <rect class="box" x="456" y="80" width="200" height="48" rx="5" />
+  <text class="label" x="556" y="100">JMA warning JSON</text>
+  <text class="sub" x="556" y="118">per office, ETag</text>
+
+  <rect class="box" x="456" y="144" width="200" height="48" rx="5" />
+  <text class="label" x="556" y="164">DynamoDB</text>
+  <text class="sub" x="556" y="182">one item, versioned</text>
+
+  <rect class="box" x="8" y="224" width="208" height="48" rx="5" />
+  <text class="label" x="112" y="244">Alexa event gateway</text>
+  <text class="sub" x="112" y="262">ChangeReport</text>
+
+  <rect class="box" x="248" y="224" width="176" height="48" rx="5" />
+  <text class="label" x="336" y="244">Alexa routine</text>
+  <text class="sub" x="336" y="262">when a sensor opens</text>
+
+  <rect class="box" x="456" y="224" width="200" height="48" rx="5" />
+  <text class="label" x="556" y="244">Alexa device</text>
+  <text class="sub" x="556" y="262">fixed phrase</text>
+
+  <line class="edge" x1="168" y1="108" x2="200" y2="108" marker-end="url(#arrow)" />
+  <path class="edge" d="M 408 76 L 432 76 L 432 40 L 456 40" marker-end="url(#arrow)" />
+  <line class="edge" x1="408" y1="104" x2="456" y2="104" marker-end="url(#arrow)" />
+  <path class="edge" d="M 408 140 L 432 140 L 432 168 L 456 168" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+
+  <path class="edge" d="M 304 156 L 304 204 L 112 204 L 112 224" marker-end="url(#arrow)" />
+  <text class="edge-label" x="296" y="188" text-anchor="end">DETECTED, then NOT_DETECTED</text>
+
+  <line class="edge" x1="216" y1="248" x2="248" y2="248" marker-end="url(#arrow)" />
+  <line class="edge" x1="424" y1="248" x2="456" y2="248" marker-end="url(#arrow)" />
+</svg>
