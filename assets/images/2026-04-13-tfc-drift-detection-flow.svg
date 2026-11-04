@@ -9,6 +9,7 @@
     .label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; fill: #222222; text-anchor: middle; }
     .sub { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
     .note { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+    .step { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 13px; fill: #222222; text-anchor: middle; }
   </style>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -34,13 +35,13 @@
   <text class="label" x="442" y="50">HCP Terraform API</text>
 
   <rect class="box" x="348" y="58" width="188" height="26" rx="4" />
-  <text class="label" x="442" y="76">1. list workspaces</text>
+  <text class="step" x="442" y="76">1. list workspaces</text>
 
   <rect class="box" x="348" y="90" width="188" height="26" rx="4" />
-  <text class="label" x="442" y="108">2. create plan-only run</text>
+  <text class="step" x="442" y="108">2. create plan-only run</text>
 
   <rect class="box" x="348" y="122" width="188" height="26" rx="4" />
-  <text class="label" x="442" y="140">3. poll until finished</text>
+  <text class="step" x="442" y="140">3. poll until finished</text>
 
   <line class="edge" x1="548" y1="88" x2="568" y2="88" marker-end="url(#arrow)" />
 

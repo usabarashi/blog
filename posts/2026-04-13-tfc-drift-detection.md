@@ -121,7 +121,8 @@ const TERMINAL_STATUSES = new Set([
 ```
 
 `planned_and_finished` は plan-only run の正常終了です.
-`policy_soft_failed` は Sentinel の soft fail で, plan-only run ではこれも終わりの状態になります.
+`policy_soft_failed` も plan-only run では終わりの状態です.
+`planned_and_finished` 以外で終わった run は, 検出できなかったものとして通知します.
 上限を超えた run は `timed_out` として扱います.
 
 待ち時間の上限は, 通常のワークスペースで 10 分, agent で動くワークスペースでは 15 分です.
@@ -133,7 +134,7 @@ run が agent に渡って plan が始まるまでに時間がかかるためで
 ## 何を drift とみなすか
 
 run が `planned_and_finished` で終わったら, 差分の有無と内訳を読みます.
-差分の有無は run の `has-changes` で判定し, 追加, 変更, 削除の件数は plan の `resource-additions`, `resource-changes`, `resource-destructions` から読みます.
+差分の有無は run か plan の `has-changes` で判定し, 追加, 変更, 削除の件数は plan の `resource-additions`, `resource-changes`, `resource-destructions` から読みます.
 ここで drift と呼ぶのは, plan に差分が出たという事実だけです.
 手作業で変えられたのか, apply できなかった変更が残っているのかは区別しません.
 
@@ -141,7 +142,7 @@ run が `planned_and_finished` で終わったら, 差分の有無と内訳を�
 |---|---|---|
 | `planned_and_finished` で差分なし | 問題なし | 通知しない |
 | `planned_and_finished` で差分あり | drift | 通知する. 件数も載せる |
-| `errored` や `timed_out` | 検出できていない | 通知する |
+| `planned_and_finished` 以外で終了, または `timed_out` | 検出できていない | 通知する |
 
 すべてのワークスペースで plan が正常に終わり, 差分がなければ通知しません.
 drift があっても run は正常に終わっているので, ワークフローは失敗にしません.
@@ -164,13 +165,15 @@ drift があっても run は正常に終わっているので, ワークフロ�
           retries: 5
 ```
 
+payload はスクリプトが組み立てた JSON をそのまま送るので, `payload-templated: false` にしています.
+
 ## 運用
 
 この通知を見るようになって, コードを触っていないワークスペースの変化に気付けるようになりました.
 動かし始めた直後に, あるワークスペースで drift が見つかりました.
 コードにない変更だったので, クラウド側の設定をコードに取り込むか, 戻すかを決めました.
 
-この処理には, 対象のワークスペースで run を作れるトークンが要ります.
+この処理には, 組織のワークスペースを一覧でき, run を作れるトークンが要ります.
 GitHub Secrets に置き, 環境変数でスクリプトに渡しています.
 
 plan を毎日回すこと自体は, ワークフローと 1 つのスクリプトで足ります.
