@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 344" role="img" width="672" height="344">
+  <title>Execution on the NixOS host, with identity, state and observation in the cloud</title>
+  <style>
+    .bg { fill: #ffffff; }
+    .box { fill: #e6e6e6; stroke: #333333; stroke-width: 1.5; }
+    .group { fill: none; stroke: #333333; stroke-width: 1.5; stroke-dasharray: 6 4; }
+    .edge { stroke: #333333; stroke-width: 1.5; fill: none; }
+    .label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; fill: #222222; text-anchor: middle; }
+    .sub { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+    .note { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="672" height="344" fill="#ffffff" />
+
+  <rect class="group" x="8" y="48" width="320" height="256" rx="8" />
+  <text class="label" x="168" y="72">NixOS host (flake-managed)</text>
+
+  <rect class="group" x="344" y="48" width="320" height="256" rx="8" />
+  <text class="label" x="504" y="72">Cloud (Terraform-managed)</text>
+
+  <rect class="box" x="24" y="88" width="288" height="48" rx="5" />
+  <text class="label" x="168" y="108">service modules</text>
+  <text class="sub" x="168" y="126">options + unit definitions</text>
+
+  <line class="edge" x1="168" y1="136" x2="168" y2="152" marker-end="url(#arrow)" />
+
+  <rect class="box" x="24" y="152" width="288" height="56" rx="5" />
+  <text class="label" x="168" y="180">systemd units + timers</text>
+
+  <rect class="box" x="24" y="224" width="288" height="56" rx="5" />
+  <text class="label" x="168" y="248">Logs</text>
+  <text class="sub" x="168" y="266">shipped to cloud</text>
+
+  <rect class="box" x="360" y="88" width="288" height="48" rx="5" />
+  <text class="label" x="504" y="108">Cloud identity</text>
+  <text class="sub" x="504" y="126">short-lived credentials</text>
+
+  <rect class="box" x="360" y="152" width="288" height="56" rx="5" />
+  <text class="label" x="504" y="174">State store</text>
+  <text class="sub" x="504" y="192">application state</text>
+
+  <rect class="box" x="360" y="224" width="288" height="56" rx="5" />
+  <text class="label" x="504" y="246">Log storage</text>
+  <text class="sub" x="504" y="264">error alerts</text>
+
+  <line class="edge" x1="312" y1="168" x2="360" y2="112" marker-end="url(#arrow)" />
+  <line class="edge" x1="312" y1="184" x2="360" y2="180" marker-end="url(#arrow)" />
+  <line class="edge" x1="312" y1="252" x2="360" y2="252" marker-end="url(#arrow)" />
+
+  <text class="note" x="336" y="332">The host holds no long-lived cloud keys</text>
+</svg>
