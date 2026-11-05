@@ -22,6 +22,7 @@ Japanese drafts in `posts/` and `pages/` follow the `japanese-tech-writing` skil
 - Avoid contrived, roundabout phrasing. Design decisions are fine when stated plainly; do not stage them with setup or narrate the effort behind them.
   - Bad: 「API の機能だけでは, タイムラインのフィルタは作れません. セッションをどこに置き, どの単位で作り, 複数の判定をどう順序づけるかを決める必要がありました.」
   - Good: 「セッションは offscreen document に置きます. service worker はアイドル状態になると停止するためです.」
+- Do not use 「自宅」 or 「手元」 to refer to where something runs. Name the place instead, for example 「プライベート LAN の中のホスト」.
 
 ## Figures and tables
 

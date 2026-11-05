@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 280" role="img" width="672" height="280">
+  <title>Two monitoring layers: a weekly pin check on a GitHub-hosted runner and a daily unit-config check on the host</title>
+  <style>
+    .bg { fill: #ffffff; }
+    .box { fill: #e6e6e6; stroke: #333333; stroke-width: 1.5; }
+    .group { fill: none; stroke: #333333; stroke-width: 1.5; stroke-dasharray: 6 4; }
+    .edge { stroke: #333333; stroke-width: 1.5; fill: none; }
+    .label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; fill: #222222; text-anchor: middle; }
+    .sub { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+    .grouplabel { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 13px; fill: #222222; text-anchor: start; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="672" height="280" fill="#ffffff" />
+
+  <rect class="group" x="8" y="36" width="440" height="96" rx="8" />
+  <text class="grouplabel" x="22" y="56">Layer 1: pin freshness (weekly, GitHub-hosted runner)</text>
+
+  <rect class="box" x="20" y="66" width="124" height="48" rx="5" />
+  <text class="label" x="82" y="87">flake.lock</text>
+  <text class="sub" x="82" y="105">pinned rev</text>
+
+  <line class="edge" x1="144" y1="90" x2="156" y2="90" marker-end="url(#arrow)" />
+
+  <rect class="box" x="158" y="66" width="156" height="48" rx="5" />
+  <text class="label" x="236" y="87">nix flake update</text>
+  <text class="sub" x="236" y="105">on a temp copy</text>
+
+  <line class="edge" x1="314" y1="90" x2="326" y2="90" marker-end="url(#arrow)" />
+
+  <rect class="box" x="328" y="66" width="110" height="48" rx="5" />
+  <text class="label" x="383" y="87">compare</text>
+  <text class="sub" x="383" y="105">X.Y.Z</text>
+
+  <rect class="group" x="8" y="168" width="440" height="96" rx="8" />
+  <text class="grouplabel" x="22" y="188">Layer 2: unit config (daily, on the host)</text>
+
+  <rect class="box" x="20" y="198" width="124" height="48" rx="5" />
+  <text class="label" x="82" y="219">host timer</text>
+  <text class="sub" x="82" y="237">daily</text>
+
+  <line class="edge" x1="144" y1="222" x2="156" y2="222" marker-end="url(#arrow)" />
+
+  <rect class="box" x="158" y="198" width="156" height="48" rx="5" />
+  <text class="label" x="236" y="219">unit ExecStart</text>
+  <text class="sub" x="236" y="237">configured version</text>
+
+  <line class="edge" x1="314" y1="222" x2="326" y2="222" marker-end="url(#arrow)" />
+
+  <rect class="box" x="328" y="198" width="110" height="48" rx="5" />
+  <text class="label" x="383" y="219">compare</text>
+  <text class="sub" x="383" y="237">pinned</text>
+
+  <rect class="box" x="496" y="126" width="164" height="60" rx="5" />
+  <text class="label" x="578" y="150">Slack</text>
+  <text class="sub" x="578" y="168">only on a problem</text>
+
+  <line class="edge" x1="438" y1="88" x2="494" y2="142" marker-end="url(#arrow)" />
+  <line class="edge" x1="438" y1="220" x2="494" y2="170" marker-end="url(#arrow)" />
+</svg>
