@@ -1,0 +1,155 @@
+---
+title: "AI を組み込んだワークフローの権限をステップごとに絞る"
+date: "2026-06-28"
+tags:
+  - Temporal
+  - NixOS
+  - AI Agent
+  - Slack
+  - TypeScript
+---
+
+AI を組み込んだワークフローを Temporal で動かしています.
+Workflow が処理の順序を制御し, ファイル操作や通信は Activity が担います.
+各 Activity を 1 つのステップとして扱い, ステップごとに再試行の方針と使う資格情報を決めています.
+
+AI Agent が使える資格情報や操作の範囲が広いほど, **プロンプトインジェクション**による漏えいや権限悪用の影響も大きくなります.
+この影響を抑えるため, 処理をステップに分けたうえで, エージェントの実行環境とアクセスできる資格情報を制限しています.
+
+実行環境は NixOS のホストです.
+プロンプトやサービスの定義は Nix で管理し, 秘密情報は sops-nix で配置しています.
+
+[![Temporal の公式サイト](https://temporal.io/images/open-graph/shiny.png)](https://temporal.io/)
+
+## 動かしている 2 つのワークフロー
+
+1 つは, NixOS の更新情報を毎日 Slack に流す nix-digest です.
+RSS を取る fetch, 記事ごとに要約する summarize, 要約を選別して整形する rank, Slack に投稿する post の 4 つに分けています.
+
+もう 1 つは, インフラのセキュリティレビューを行う security-review です.
+いまは prepare, review, finalize の 3 つに分け, review だけを AI Agent に任せています.
+
+![nix-digest と security-review の処理の順](/images/2026-06-28-temporal-workflows.svg)
+
+## ステップごとに再試行を決める
+
+ステップを分けると, 再試行の範囲も分けられます.
+Workflow の履歴をリプレイするとき, 完了が記録された Activity は再実行せず, 記録された結果を使います.
+ただし, 外部処理の成功後, 完了が記録される前に障害が起きると, 再試行で同じ処理を実行する可能性があります.
+review のエージェントには 30 分の実行上限を設けており, 長時間の再実行と API 利用料の増加を避けるため, Activity の自動再試行を無効にしています.
+ワークフローの失敗を Slack に通知する Activity は, 最大 3 回試行します.
+
+nix-digest は outbox の投稿記録で, security-review は投稿内容のハッシュを使った投稿済みマーカーで, 重複を抑えています.
+ただし, Slack への投稿成功後, 記録を保存する前に障害が起きると, 再実行で重複する可能性があります.
+Temporal の再試行だけでは, 外部への投稿を厳密に 1 回にはできません.
+
+## ステップごとに資格情報を割り当てる
+
+再試行の範囲を分けても, それだけではアクセス権は分かれません.
+エージェントを別のランナーで動かし, 渡す資格情報とマウントを制限しています.
+
+各ステップの実行場所と使う資格情報は次のとおりです.
+
+| ワークフロー | ステップ | 実行場所 | 使う資格情報 | AI Agent |
+|---|---|---|---|---|
+| nix-digest | fetch | コンテナ | なし | 使わない |
+| nix-digest | summarize / rank | 使い捨てランナー | LLM の API キー | 使う (ツールなし) |
+| nix-digest | post | コンテナ | Slack の bot トークン | 使わない |
+| security-review | prepare | コンテナ (root) | GitHub App の秘密鍵, installation token | 使わない |
+| security-review | review | 使い捨てランナー | LLM の API キー | 使う (ツールあり) |
+| security-review | finalize | コンテナ (root) | Slack の bot トークン | 使わない |
+
+以下では security-review を例に, 各ステップの中身を見ます.
+
+prepare は GitHub App の秘密鍵を使って installation token を取得し, その token でリポジトリを clone します.
+review のエージェントには, 秘密鍵も installation token も渡しません.
+リポジトリは review のランナーに `/work` として読み取り専用でマウントし, レポートは `/out` に書かせます.
+finalize はレポートを検証し, 比較基準として保存している baseline との差分を取り, Slack に投稿します.
+baseline を更新するのは, Slack への投稿が成功したあとです.
+
+prepare と finalize は同じコンテナの root ワーカーで動き, 互いの秘密ファイルも読めるため, 両者の分離はコード上の責務分けです.
+GitHub App の秘密鍵と Slack の bot トークンはコンテナ側に置き, エージェントのランナーには渡しません.
+
+![security-review の prepare, review, finalize, コンテナとランナーの境界](/images/2026-06-28-temporal-privilege-boundary.svg)
+
+## エージェントに渡すプロンプトを固定する
+
+エージェントのステップは, ホストの root で動くブローカーに実行を依頼します.
+ブローカーは socket-activated のサービスで, ワークフローのアプリは, バインドマウントされた unix socket に 1 つの JSON を送るだけです.
+
+```json
+{"promptId": "security-review/review", "input": {"clonePath": "/work"}, "timeoutSec": 1800, "workdir": "<allowed-root>/checkout"}
+```
+
+`promptId` は, Nix が組み立てた `PROMPTS_DIR` の下のディレクトリに一致しなければなりません.
+`workdir` は, ブローカーが許可したルートの下にあるパスだけを受け付けます.
+`input` の `clonePath` はプロンプトに埋め込むパスで, マウント元は `workdir` で指定します.
+プロンプトのファイルパス, 追加の引数, 環境変数名をアプリが指定することはできません.
+ブローカーが実行できるのは, インフラ側の Nix に列挙したプロンプトだけです.
+ここでいう固定は, 呼び出し元のアプリがプロンプトを差し替えられないという意味です.
+ブローカーは root で動くため, この許可リストとパスの検証が特に重要です.
+
+各プロンプトのディレクトリには `agent.json`, `system.md`, `user.md` を置きます.
+security-review の `agent.json` から, ツールの設定を抜粋すると次のようになります.
+
+```json
+{
+  "tools": ["bash", "read", "write", "webfetch"]
+}
+```
+
+モデルに公開するツールはこの 4 つです.
+ただし, `bash` から実行できる操作の範囲は, ランナーのアクセス権とネットワーク制限に依存します.
+入力は `user.md` のテンプレート変数に埋め込みます.
+アプリは system prompt やツール設定を差し替えられませんが, 入力やリポジトリを通じたプロンプトインジェクションは防げません.
+
+プロンプトを改善するときは, インフラ側で定義を更新し, 対象のステップだけをエージェントの 1 セッションとして切り出して実行できます.
+ワークフロー全体を組み直さずに, ステップ単位で反復的に改善できる点も利点です.
+
+## 使い捨てのランナーで実行する
+
+プロンプトとツールを固定しても, 実行環境でアクセスできる範囲が広ければ影響は大きくなります.
+ブローカーは呼び出しごとに `systemd-nspawn` の使い捨てランナーを起動します.
+ルートファイルシステムは読み取り専用のベースと一時的な overlay で動き, ランナーの一時的なファイルシステムは実行後に破棄されます.
+この分離により, 実行環境への変更の持ち越しを抑えています.
+
+ランナーに渡すホストのディレクトリは, 読み取り専用の `/nix/store`, 読み取り専用のプロンプト, 必要なら読み取り専用のリポジトリ, 書き込み用の `/out` です.
+`/nix/store` には実行に必要なバイナリとライブラリが入っています.
+ホストから渡すマウントのうち, 書き込み可能なのは `/out` だけです.
+ブローカーはそこからレポートを読み戻し, 実行ログもホスト側に保存します.
+
+LLM の API キーは, sops-nix が配置した秘密ファイルからブローカーが読み, ランナーの環境変数に注入します.
+ワークフローのアプリはキーを持ちません.
+
+ランナーの外向き通信を TCP 443 と DNS に制限し, LAN や tailnet への接続は遮断しています.
+ただし, インターネット上の接続先を特定のサービスに限定しているわけではありません.
+コンテナの中のアプリからも, ホストの LAN への接続を遮断しています.
+
+## サンドボックスの限界
+
+今回のサンドボックスは VM ではなく, ホストのカーネルを共有するコンテナです.
+カーネルの脆弱性まで含めた分離にはなりません.
+このホストの性能が足りないため, VM は使わずに検証しています.
+オンプレミスなら, ネットワークを分けたホストを用意して VM で動かすこともできます.
+クラウドで VM を借りる手段もありますが, いまはコンテナ分離の範囲で試しています.
+
+## 雑感
+
+いまの構成は, 必要なときに起動し, 終われば捨てるエージェントです.
+常駐させる形とは, 権限の持ち方も, 失敗の見つけ方も変わります.
+
+常駐の AI Agent を運用するなら, 何を覚えさせ, どの資格情報を渡し, いつ止めるかを決める必要があります.
+状態, 有効期限, 更新, 失効の管理も, ワークフローごとの設計になります.
+誤動作の検知やコストの管理も同様です.
+
+まずは今回のように, エージェントを常駐させず, ステップ単位で権限を絞る形から始めるのが現実的だと感じています.
+Temporal の Workflow は, 常駐型のエージェントをいつ起動し, どこで止めるかを管理する単位にも使えそうです.
+
+## References
+
+- [Temporal](https://docs.temporal.io/)
+- [Temporal TypeScript SDK](https://docs.temporal.io/develop/typescript)
+- [systemd-nspawn](https://www.freedesktop.org/software/systemd/man/latest/systemd-nspawn.html)
+- [NixOS](https://nixos.org/)
+- [sops-nix](https://github.com/Mic92/sops-nix)
+- [OWASP Top 10 for LLM Applications: Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/)
