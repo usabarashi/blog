@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 292" role="img" width="672" height="292">
+  <title>One batch request per run from the bot to Sakura AI Engine, with the local llama.cpp container removed</title>
+  <style>
+    .bg { fill: #ffffff; }
+    .box { fill: #e6e6e6; stroke: #333333; stroke-width: 1.5; }
+    .edge { stroke: #333333; stroke-width: 1.5; fill: none; }
+    .dash { stroke-dasharray: 5 4; }
+    .label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; fill: #222222; text-anchor: middle; }
+    .sub { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+    .edge-label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+    .note { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="672" height="292" fill="#ffffff" />
+
+  <rect class="box" x="16" y="64" width="108" height="64" rx="5" />
+  <text class="label" x="70" y="92">systemd timer</text>
+  <text class="sub" x="70" y="112">every 20 min</text>
+
+  <rect class="box" x="144" y="64" width="156" height="64" rx="5" />
+  <text class="label" x="222" y="92">twitter-bot</text>
+  <text class="sub" x="222" y="112">1 batch, 1 request</text>
+
+  <rect class="box" x="330" y="64" width="190" height="64" rx="5" />
+  <text class="label" x="425" y="92">Sakura AI Engine</text>
+  <text class="sub" x="425" y="112">/v1/chat/completions</text>
+
+  <rect class="box" x="558" y="64" width="98" height="64" rx="5" />
+  <text class="label" x="607" y="92">Slack</text>
+  <text class="sub" x="607" y="112">kept posts</text>
+
+  <line class="edge" x1="124" y1="96" x2="144" y2="96" marker-end="url(#arrow)" />
+  <line class="edge" x1="300" y1="96" x2="330" y2="96" marker-end="url(#arrow)" />
+  <line class="edge" x1="520" y1="96" x2="558" y2="96" marker-end="url(#arrow)" />
+
+  <rect class="box dash" x="144" y="184" width="376" height="64" rx="5" />
+  <text class="label" x="332" y="212">llama.cpp container (removed)</text>
+  <text class="sub" x="332" y="232">model weights, readiness probe, stop hook</text>
+
+  <line class="edge dash" x1="222" y1="128" x2="222" y2="184" marker-end="url(#arrow)" />
+  <text class="edge-label" x="234" y="162">before</text>
+
+  <text class="note" x="336" y="272">If the request fails, every post goes to Slack unfiltered</text>
+</svg>
