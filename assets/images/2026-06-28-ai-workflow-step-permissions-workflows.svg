@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 240" role="img" width="672" height="240">
+  <title>Two Temporal workflows: nix-digest and security-review</title>
+  <style>
+    .bg { fill: #ffffff; }
+    .box { fill: #e6e6e6; stroke: #333333; stroke-width: 1.5; }
+    .edge { stroke: #333333; stroke-width: 1.5; fill: none; }
+    .row { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; font-weight: 600; fill: #222222; text-anchor: start; }
+    .label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; fill: #222222; text-anchor: middle; }
+    .legend { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: start; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="672" height="240" fill="#ffffff" />
+
+  <text class="row" x="16" y="24">nix-digest</text>
+
+  <rect class="box" x="16" y="36" width="140" height="48" rx="5" />
+  <text class="label" x="86" y="64">fetch</text>
+
+  <rect class="box" x="176" y="36" width="140" height="48" rx="5" />
+  <text class="label" x="246" y="64">summarize (AI)</text>
+
+  <rect class="box" x="336" y="36" width="140" height="48" rx="5" />
+  <text class="label" x="406" y="64">rank (AI)</text>
+
+  <rect class="box" x="496" y="36" width="160" height="48" rx="5" />
+  <text class="label" x="576" y="64">post</text>
+
+  <line class="edge" x1="156" y1="60" x2="176" y2="60" marker-end="url(#arrow)" />
+  <line class="edge" x1="316" y1="60" x2="336" y2="60" marker-end="url(#arrow)" />
+  <line class="edge" x1="476" y1="60" x2="496" y2="60" marker-end="url(#arrow)" />
+
+  <text class="row" x="16" y="120">security-review</text>
+
+  <rect class="box" x="16" y="132" width="180" height="48" rx="5" />
+  <text class="label" x="106" y="160">prepare</text>
+
+  <rect class="box" x="218" y="132" width="180" height="48" rx="5" />
+  <text class="label" x="308" y="160">review (AI)</text>
+
+  <rect class="box" x="420" y="132" width="220" height="48" rx="5" />
+  <text class="label" x="530" y="160">finalize</text>
+
+  <line class="edge" x1="196" y1="156" x2="218" y2="156" marker-end="url(#arrow)" />
+  <line class="edge" x1="398" y1="156" x2="420" y2="156" marker-end="url(#arrow)" />
+
+  <text class="legend" x="16" y="216">AI: agent step</text>
+</svg>
