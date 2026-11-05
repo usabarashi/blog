@@ -29,14 +29,15 @@ RSS を取る fetch, 記事ごとに要約する summarize, 要約を選別し�
 もう 1 つは, インフラのセキュリティレビューを行う security-review です.
 いまは prepare, review, finalize の 3 つに分け, review だけを AI Agent に任せています.
 
-![nix-digest と security-review の処理の順](/images/2026-06-28-temporal-workflows.svg)
+![nix-digest と security-review の処理の順](/images/2026-06-28-ai-workflow-step-permissions-workflows.svg)
 
 ## ステップごとに再試行を決める
 
 ステップを分けると, 再試行の範囲も分けられます.
 Workflow の履歴をリプレイするとき, 完了が記録された Activity は再実行せず, 記録された結果を使います.
 ただし, 外部処理の成功後, 完了が記録される前に障害が起きると, 再試行で同じ処理を実行する可能性があります.
-review のエージェントには 30 分の実行上限を設けており, 長時間の再実行と API 利用料の増加を避けるため, Activity の自動再試行を無効にしています.
+review のエージェントには 30 分の実行上限を設けています.
+長時間の再実行と API 利用料の増加を避けるため, Activity の自動再試行を無効にしています.
 ワークフローの失敗を Slack に通知する Activity は, 最大 3 回試行します.
 
 nix-digest は outbox の投稿記録で, security-review は投稿内容のハッシュを使った投稿済みマーカーで, 重複を抑えています.
@@ -55,9 +56,9 @@ Temporal の再試行だけでは, 外部への投稿を厳密に 1 回にはで
 | nix-digest | fetch | コンテナ | なし | 使わない |
 | nix-digest | summarize / rank | 使い捨てランナー | LLM の API キー | 使う (ツールなし) |
 | nix-digest | post | コンテナ | Slack の bot トークン | 使わない |
-| security-review | prepare | コンテナ (root) | GitHub App の秘密鍵, installation token | 使わない |
+| security-review | prepare | コンテナ (特権) | GitHub App の秘密鍵, installation token | 使わない |
 | security-review | review | 使い捨てランナー | LLM の API キー | 使う (ツールあり) |
-| security-review | finalize | コンテナ (root) | Slack の bot トークン | 使わない |
+| security-review | finalize | コンテナ (特権) | Slack の bot トークン | 使わない |
 
 以下では security-review を例に, 各ステップの中身を見ます.
 
@@ -67,30 +68,24 @@ review のエージェントには, 秘密鍵も installation token も渡しま
 finalize はレポートを検証し, 比較基準として保存している baseline との差分を取り, Slack に投稿します.
 baseline を更新するのは, Slack への投稿が成功したあとです.
 
-prepare と finalize は同じコンテナの root ワーカーで動き, 互いの秘密ファイルも読めるため, 両者の分離はコード上の責務分けです.
+prepare と finalize は同じコンテナの特権ワーカーで動き, 互いの秘密ファイルも読めるため, 両者の分離はコード上の責務分けです.
 GitHub App の秘密鍵と Slack の bot トークンはコンテナ側に置き, エージェントのランナーには渡しません.
 
-![security-review の prepare, review, finalize, コンテナとランナーの境界](/images/2026-06-28-temporal-privilege-boundary.svg)
+![security-review の prepare, review, finalize, コンテナとランナーの境界](/images/2026-06-28-ai-workflow-step-permissions-privilege-boundary.svg)
 
 ## エージェントに渡すプロンプトを固定する
 
-エージェントのステップは, ホストの root で動くブローカーに実行を依頼します.
-ブローカーは socket-activated のサービスで, ワークフローのアプリは, バインドマウントされた unix socket に 1 つの JSON を送るだけです.
-
-```json
-{"promptId": "security-review/review", "input": {"clonePath": "/work"}, "timeoutSec": 1800, "workdir": "<allowed-root>/checkout"}
-```
-
-`promptId` は, Nix が組み立てた `PROMPTS_DIR` の下のディレクトリに一致しなければなりません.
-`workdir` は, ブローカーが許可したルートの下にあるパスだけを受け付けます.
-`input` の `clonePath` はプロンプトに埋め込むパスで, マウント元は `workdir` で指定します.
+エージェントのステップは, ホスト側の特権ブローカーに実行を依頼します.
+ワークフローのアプリは, バインドマウントされた unix socket に, プロンプト ID と入力データを JSON で送るだけです.
+プロンプト ID は, Nix が管理するプロンプト定義の ID に一致しなければなりません.
+入力データにホストのパスを含める場合も, ブローカーが許可したルートの下だけを受け付けます.
 プロンプトのファイルパス, 追加の引数, 環境変数名をアプリが指定することはできません.
 ブローカーが実行できるのは, インフラ側の Nix に列挙したプロンプトだけです.
 ここでいう固定は, 呼び出し元のアプリがプロンプトを差し替えられないという意味です.
-ブローカーは root で動くため, この許可リストとパスの検証が特に重要です.
+ブローカーは特権で動くため, この許可リストとパスの検証が特に重要です.
 
-各プロンプトのディレクトリには `agent.json`, `system.md`, `user.md` を置きます.
-security-review の `agent.json` から, ツールの設定を抜粋すると次のようになります.
+プロンプトの定義には, システムプロンプト, 入力テンプレート, ツール設定を含めます.
+security-review のツール設定を抜粋すると次のようになります.
 
 ```json
 {
@@ -100,7 +95,8 @@ security-review の `agent.json` から, ツールの設定を抜粋すると次
 
 モデルに公開するツールはこの 4 つです.
 ただし, `bash` から実行できる操作の範囲は, ランナーのアクセス権とネットワーク制限に依存します.
-入力は `user.md` のテンプレート変数に埋め込みます.
+`webfetch` も, ランナーに許可した外向き通信の範囲でしか使えません.
+入力は入力テンプレートの変数に埋め込みます.
 アプリは system prompt やツール設定を差し替えられませんが, 入力やリポジトリを通じたプロンプトインジェクションは防げません.
 
 プロンプトを改善するときは, インフラ側で定義を更新し, 対象のステップだけをエージェントの 1 セッションとして切り出して実行できます.
@@ -121,7 +117,7 @@ security-review の `agent.json` から, ツールの設定を抜粋すると次
 LLM の API キーは, sops-nix が配置した秘密ファイルからブローカーが読み, ランナーの環境変数に注入します.
 ワークフローのアプリはキーを持ちません.
 
-ランナーの外向き通信を TCP 443 と DNS に制限し, LAN や tailnet への接続は遮断しています.
+ランナーの外向き通信を限定し, LAN や tailnet への接続は遮断しています.
 ただし, インターネット上の接続先を特定のサービスに限定しているわけではありません.
 コンテナの中のアプリからも, ホストの LAN への接続を遮断しています.
 
@@ -147,7 +143,8 @@ Temporal の Workflow は, 常駐型のエージェントをいつ起動し, ど
 
 ## References
 
-- [Temporal](https://docs.temporal.io/)
+- [Temporal](https://temporal.io/)
+- [Temporal Documentation](https://docs.temporal.io/)
 - [Temporal TypeScript SDK](https://docs.temporal.io/develop/typescript)
 - [systemd-nspawn](https://www.freedesktop.org/software/systemd/man/latest/systemd-nspawn.html)
 - [NixOS](https://nixos.org/)
