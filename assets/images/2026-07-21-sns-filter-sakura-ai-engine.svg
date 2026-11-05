@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 292" role="img" width="672" height="292">
-  <title>One batch request per run from the bot to Sakura AI Engine, with the local llama.cpp container removed</title>
+  <title>One batch request per run from the SNS bot to Sakura AI Engine, with the local llama.cpp container removed</title>
   <style>
     .bg { fill: #ffffff; }
     .box { fill: #e6e6e6; stroke: #333333; stroke-width: 1.5; }
@@ -24,7 +24,7 @@
   <text class="sub" x="70" y="112">every 20 min</text>
 
   <rect class="box" x="144" y="64" width="156" height="64" rx="5" />
-  <text class="label" x="222" y="92">twitter-bot</text>
+  <text class="label" x="222" y="92">SNS bot</text>
   <text class="sub" x="222" y="112">1 batch, 1 request</text>
 
   <rect class="box" x="330" y="64" width="190" height="64" rx="5" />
@@ -46,5 +46,5 @@
   <line class="edge dash" x1="222" y1="128" x2="222" y2="184" marker-end="url(#arrow)" />
   <text class="edge-label" x="234" y="162">before</text>
 
-  <text class="note" x="336" y="272">If the request fails, every post goes to Slack unfiltered</text>
+  <text class="note" x="336" y="272">On failure, all posts sent to the filter go to Slack</text>
 </svg>
