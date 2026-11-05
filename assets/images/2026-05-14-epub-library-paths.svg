@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 300" role="img" width="672" height="300">
+  <title>One EPUB, two entry points: the browser viewer and the MCP server</title>
+  <style>
+    .bg { fill: #ffffff; }
+    .box { fill: #e6e6e6; stroke: #333333; stroke-width: 1.5; }
+    .edge { stroke: #333333; stroke-width: 1.5; fill: none; }
+    .label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; fill: #222222; text-anchor: middle; }
+    .sub { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+    .edge-label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="672" height="300" fill="#ffffff" />
+
+  <rect class="box" x="20" y="110" width="150" height="60" rx="5" />
+  <text class="label" x="95" y="132">EPUB (ZIP)</text>
+  <text class="sub" x="95" y="152">text in XHTML</text>
+
+  <rect class="box" x="230" y="100" width="180" height="80" rx="5" />
+  <text class="label" x="320" y="128">library backend</text>
+  <text class="sub" x="320" y="148">Haskell, one SQLite</text>
+
+  <rect class="box" x="480" y="40" width="170" height="60" rx="5" />
+  <text class="label" x="565" y="62">browser viewer</text>
+  <text class="sub" x="565" y="82">read a book</text>
+
+  <rect class="box" x="480" y="110" width="170" height="60" rx="5" />
+  <text class="label" x="565" y="132">MCP server</text>
+  <text class="sub" x="565" y="152">four tools</text>
+
+  <rect class="box" x="480" y="200" width="170" height="60" rx="5" />
+  <text class="label" x="565" y="222">AI agent</text>
+  <text class="sub" x="565" y="242">cites the book</text>
+
+  <line class="edge" x1="170" y1="140" x2="230" y2="140" marker-end="url(#arrow)" />
+  <text class="edge-label" x="200" y="130">ingest</text>
+
+  <path class="edge" d="M 410 110 H 445 V 70 H 480" marker-end="url(#arrow)" />
+  <text class="edge-label" x="462" y="60">read</text>
+
+  <line class="edge" x1="410" y1="140" x2="480" y2="140" marker-end="url(#arrow)" />
+  <text class="edge-label" x="445" y="130">tools</text>
+
+  <line class="edge" x1="565" y1="170" x2="565" y2="200" marker-end="url(#arrow)" />
+</svg>

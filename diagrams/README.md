@@ -8,6 +8,7 @@ File names carry the post date as a prefix, the same way posts do, so an asset c
 | none (hand-written SVG) | `assets/images/2026-10-13-alexa-weather-alert-flow.svg` | `posts/2026-10-13-alexa-weather-alert.md` |
 | none (hand-written SVG) | `assets/images/2026-04-13-tfc-drift-detection-flow.svg` | `posts/2026-04-13-tfc-drift-detection.md` |
 | none (hand-written SVG) | `assets/images/2026-10-24-home-vlan-segments.svg` | `posts/2026-10-24-vlan-per-purpose.md` |
+| none (hand-written SVG) | `assets/images/2026-05-14-epub-library-paths.svg` | `posts/2026-05-14-epub-viewer-and-mcp.md` |
 | none (hand-written SVG) | `assets/images/2026-10-14-pi-advisor-flow.svg` | `posts/2026-10-14-switch-to-pi-coding-agent.md` |
 | none (hand-written SVG) | `assets/images/2026-07-21-sns-filter-sakura-ai-engine.svg` | `posts/2026-07-21-sns-filter-sakura-ai-engine.md` |
 | none (hand-written SVG) | `assets/images/2026-07-26-llamacpp-qwen-swiftbar.svg` | `posts/2026-07-26-llamacpp-qwen-swiftbar.md` |
