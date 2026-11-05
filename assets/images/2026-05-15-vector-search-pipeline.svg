@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 280" role="img" width="672" height="280">
+  <title>Hybrid search: bge-m3 vectors and FTS5 BM25 fused with RRF</title>
+  <style>
+    .bg { fill: #ffffff; }
+    .box { fill: #e6e6e6; stroke: #333333; stroke-width: 1.5; }
+    .edge { stroke: #333333; stroke-width: 1.5; fill: none; }
+    .label { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 14px; fill: #222222; text-anchor: middle; }
+    .sub { font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; fill: #444444; text-anchor: middle; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="672" height="280" fill="#ffffff" />
+
+  <rect class="box" x="20" y="30" width="140" height="216" rx="5" />
+  <text class="label" x="90" y="132">chunks</text>
+  <text class="sub" x="90" y="150">~500 chars</text>
+
+  <rect class="box" x="200" y="30" width="150" height="56" rx="5" />
+  <text class="label" x="275" y="52">bge-m3</text>
+  <text class="sub" x="275" y="70">Ollama</text>
+
+  <rect class="box" x="200" y="190" width="150" height="56" rx="5" />
+  <text class="label" x="275" y="212">FTS5</text>
+  <text class="sub" x="275" y="230">BM25</text>
+
+  <rect class="box" x="400" y="30" width="160" height="56" rx="5" />
+  <text class="label" x="480" y="52">chunk_vec</text>
+  <text class="sub" x="480" y="70">1024 dims</text>
+
+  <rect class="box" x="400" y="190" width="160" height="56" rx="5" />
+  <text class="label" x="480" y="212">chunk_fts</text>
+  <text class="sub" x="480" y="230">FTS5 index</text>
+
+  <rect class="box" x="435" y="110" width="90" height="56" rx="5" />
+  <text class="label" x="480" y="132">RRF</text>
+  <text class="sub" x="480" y="150">rank fusion</text>
+
+  <rect class="box" x="540" y="110" width="120" height="56" rx="5" />
+  <text class="label" x="600" y="132">MCP</text>
+  <text class="sub" x="600" y="150">search tool</text>
+
+  <line class="edge" x1="160" y1="58" x2="200" y2="58" marker-end="url(#arrow)" />
+  <line class="edge" x1="160" y1="218" x2="200" y2="218" marker-end="url(#arrow)" />
+  <line class="edge" x1="350" y1="58" x2="400" y2="58" marker-end="url(#arrow)" />
+  <line class="edge" x1="350" y1="218" x2="400" y2="218" marker-end="url(#arrow)" />
+  <line class="edge" x1="480" y1="86" x2="480" y2="110" marker-end="url(#arrow)" />
+  <line class="edge" x1="480" y1="190" x2="480" y2="166" marker-end="url(#arrow)" />
+  <line class="edge" x1="525" y1="138" x2="540" y2="138" marker-end="url(#arrow)" />
+</svg>
