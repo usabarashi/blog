@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 328" role="img" width="672" height="328">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 344" role="img" width="672" height="344">
   <title>Execution on the NixOS host, with identity, state and observation in the cloud</title>
   <style>
     .bg { fill: #ffffff; }
@@ -16,7 +16,7 @@
     </marker>
   </defs>
 
-  <rect class="bg" x="0" y="0" width="672" height="328" fill="#ffffff" />
+  <rect class="bg" x="0" y="0" width="672" height="344" fill="#ffffff" />
 
   <rect class="group" x="8" y="48" width="320" height="256" rx="8" />
   <text class="label" x="168" y="72">NixOS host (flake-managed)</text>
@@ -31,12 +31,11 @@
   <line class="edge" x1="168" y1="136" x2="168" y2="152" marker-end="url(#arrow)" />
 
   <rect class="box" x="24" y="152" width="288" height="56" rx="5" />
-  <text class="label" x="168" y="174">systemd units + timers</text>
-  <text class="sub" x="168" y="192">oneshot every 20 minutes</text>
+  <text class="label" x="168" y="180">systemd units + timers</text>
 
   <rect class="box" x="24" y="224" width="288" height="56" rx="5" />
-  <text class="label" x="168" y="246">OTel collector</text>
-  <text class="sub" x="168" y="264">journald</text>
+  <text class="label" x="168" y="248">Logs</text>
+  <text class="sub" x="168" y="266">shipped to cloud</text>
 
   <rect class="box" x="360" y="88" width="288" height="48" rx="5" />
   <text class="label" x="504" y="108">Cloud identity</text>
@@ -54,5 +53,5 @@
   <line class="edge" x1="312" y1="184" x2="360" y2="180" marker-end="url(#arrow)" />
   <line class="edge" x1="312" y1="252" x2="360" y2="252" marker-end="url(#arrow)" />
 
-  <text class="note" x="336" y="320">The host holds no long-lived cloud keys</text>
+  <text class="note" x="336" y="332">The host holds no long-lived cloud keys</text>
 </svg>
