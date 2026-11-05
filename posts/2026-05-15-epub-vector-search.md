@@ -143,6 +143,7 @@ RRF は, 各検索での順位に応じた値を候補ごとに足し合わせ�
 
 ## References
 
+- [EPUB ビューワーと書籍検索を兼ねる MCP サーバを作った](epub-viewer-and-mcp.html)
 - [sqlite-vec](https://github.com/asg017/sqlite-vec)
 - [BAAI/bge-m3](https://huggingface.co/BAAI/bge-m3)
 - [Ollama](https://ollama.com/)
