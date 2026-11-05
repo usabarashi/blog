@@ -16,6 +16,8 @@ File names carry the post date as a prefix, the same way posts do, so an asset c
 | `2026-02-22-terraform-provider-apc-credentials.mmd` (Mermaid) | `assets/images/2026-02-22-terraform-provider-apc-credentials.svg` | `posts/2026-02-22-terraform-provider-apc.md` |
 | `2026-02-22-terraform-provider-apc-session.mmd` (Mermaid) | `assets/images/2026-02-22-terraform-provider-apc-session.svg` | `posts/2026-02-22-terraform-provider-apc.md` |
 | none (hand-written SVG) | `assets/images/2026-03-27-twitter-bot-gemini-filter.svg` | `posts/2026-03-27-twitter-bot-gemini-filter.md` |
+| none (hand-written SVG) | `assets/images/2026-03-30-cloud-apps-to-nixos-split.svg` | `posts/2026-03-30-cloud-apps-to-nixos.md` |
+| none (hand-written SVG) | `assets/images/2026-03-30-cloud-apps-to-nixos-module.svg` | `posts/2026-03-30-cloud-apps-to-nixos.md` |
 | `2026-01-02-tweet-filter-gemini-nano-flow.mmd` (Mermaid) | `assets/images/2026-01-02-tweet-filter-gemini-nano-flow.svg` | `posts/2026-01-02-tweet-filter-gemini-nano.md` |
 | `2026-01-01-homelab-before.mmd` (Mermaid) | `assets/images/2026-01-01-homelab-before.svg` | `posts/2026-01-01-migrate-homelab.md` |
 | `2026-01-01-homelab-after.mmd` (Mermaid) | `assets/images/2026-01-01-homelab-after.svg` | `posts/2026-01-01-migrate-homelab.md` |
