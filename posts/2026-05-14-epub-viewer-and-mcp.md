@@ -49,7 +49,7 @@ book.epub
 OPF には, 書誌情報, `manifest`, `spine` が入っています.
 `manifest` は, 本文の XHTML, CSS, 画像, フォントの一覧です.
 `spine` は, 本文を読む順を決めます.
-目次は, EPUB 3 ではナビゲーション文書に, EPUB 2 では NCX に書かれます.
+目次は, EPUB 3 ではナビゲーション文書に, EPUB 2 では NCX に書かれます ([EPUB 3.3](https://www.w3.org/TR/epub-33/)).
 
 本文が XHTML の本では, マークアップからテキストを取り出せます.
 このサービスでは, pandoc で本文を抽出しています.
