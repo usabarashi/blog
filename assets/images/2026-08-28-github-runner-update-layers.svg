@@ -29,7 +29,7 @@
 
   <rect class="box" x="158" y="66" width="156" height="48" rx="5" />
   <text class="label" x="236" y="87">nix flake update</text>
-  <text class="sub" x="236" y="105">on a temp copy</text>
+  <text class="sub" x="236" y="105">lock restored after</text>
 
   <line class="edge" x1="314" y1="90" x2="326" y2="90" marker-end="url(#arrow)" />
 

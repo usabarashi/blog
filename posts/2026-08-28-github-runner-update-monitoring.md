@@ -151,7 +151,8 @@ nixpkgs 側のパッケージの修正が入っていることがあるためで
 日次の検査でずれが見つかったら, 配備された構成を確認します.
 停止の通知が来たら, その unit の状態を調べます.
 
-デプロイのあとは, 各 unit の起動コマンドがデプロイした構成と一致していることと, パッケージが変わった場合に再起動していることを確かめます.
+デプロイのあとは, 各 unit の起動コマンドがデプロイした構成と一致していることを確かめます.
+パッケージが変わった場合は, unit が再起動していることも確かめます.
 
 nixpkgs が上流に追いついていないという通知は, input の追従先への反映を待つ合図です.
 GitHub がそのバージョンを受け付け続けるかぎり, パッケージ版のままで構いません.
@@ -166,4 +167,3 @@ GitHub がそのバージョンを受け付け続けるかぎり, パッケー�
 - [Self-hosted runners reference](https://docs.github.com/en/actions/reference/runners/self-hosted-runners)
 - [actions/runner releases](https://github.com/actions/runner/releases)
 - [github-runner (nixpkgs)](https://github.com/NixOS/nixpkgs/tree/master/pkgs/by-name/gi/github-runner)
-- [slackapi/slack-github-action](https://github.com/slackapi/slack-github-action)
