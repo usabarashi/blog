@@ -5,6 +5,7 @@ File names carry the post date as a prefix, the same way posts do, so an asset c
 
 | Source | Output | Used by |
 |---|---|---|
+| none (hand-written SVG) | `assets/images/2026-05-08-secretive-agent-path.svg` | `posts/2026-05-08-secretive-ssh-signing.md` |
 | none (hand-written SVG) | `assets/images/2026-06-28-ai-workflow-step-permissions-workflows.svg` | `posts/2026-06-28-ai-workflow-step-permissions.md` |
 | none (hand-written SVG) | `assets/images/2026-06-28-ai-workflow-step-permissions-privilege-boundary.svg` | `posts/2026-06-28-ai-workflow-step-permissions.md` |
 | none (hand-written SVG) | `assets/images/2026-08-28-github-runner-update-layers.svg` | `posts/2026-08-28-github-runner-update-monitoring.md` |
