@@ -26,6 +26,7 @@ GitHub のメール設定で「Keep my email addresses private」を有効にす
 
 設定画面に表示された noreply アドレスを, Git のコミット用メールアドレスに設定します.
 Home Manager の git モジュールでは, `userEmail` を設定します.
+これは `git config` の `user.email` に対応します.
 
 ```nix
 programs.git = {

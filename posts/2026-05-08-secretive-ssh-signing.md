@@ -162,6 +162,7 @@ GitHub でコミット署名を検証するには, 公開鍵をアカウント�
 認証用の鍵とは別の種類として登録する必要があります.
 同じ公開鍵を両方に登録することもできます.
 コミッターのメールアドレスには, 署名鍵を登録した GitHub アカウントの検証済みメールアドレスを使います.
+個人のメールアドレスを公開したくない場合は, [GitHub の noreply アドレスを使う](/posts/github-noreply-email.html)方法があります.
 
 `allowed_signers` は, ローカルでの署名検証に使うファイルです.
 設定例の `gpg.ssh.allowedSignersFile` がこのファイルを指します.
@@ -197,5 +198,6 @@ SSH と Git の設定は Nix で管理し, 秘密鍵は Secure Enclave に保持
 - [Secretive](https://github.com/maxgoedjen/secretive)
 - [Secretive の FAQ](https://github.com/maxgoedjen/secretive/blob/main/FAQ.md)
 - [GitHub でのコミット署名の検証](https://docs.github.com/ja/authentication/managing-commit-signature-verification/about-commit-signature-verification)
+- [コミットに個人のメールアドレスを使わない](/posts/github-noreply-email.html)
 - [git-config の gpg.ssh.allowedSignersFile](https://git-scm.com/docs/git-config#Documentation/git-config.txt-gpgsshallowedSignersFile)
 - [ssh-keygen の SIGNING](https://man.openbsd.org/ssh-keygen#SIGNING)
