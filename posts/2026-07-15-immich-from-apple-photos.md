@@ -110,3 +110,4 @@ Google でログインできない場合に備え, パスワードでのログ�
 - [immich-app/immich](https://github.com/immich-app/immich)
 - [RhetTbull/osxphotos](https://github.com/RhetTbull/osxphotos)
 - [NixOS の services.immich](https://search.nixos.org/options?query=services.immich)
+- [LAN のサービスを Zero Trust にする](/posts/nginx-google-sso-zero-trust.html)
