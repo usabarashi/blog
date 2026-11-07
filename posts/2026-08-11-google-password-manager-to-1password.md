@@ -27,14 +27,12 @@ Google Password Manager はパスキーの保存にも対応しています.
 Google Password Manager にもメモ欄はありますが, ログイン情報に付随するものです.
 1Password なら, ソフトウェアのライセンスや契約情報のメモを独立した項目として保存できます.
 
-## Enterprise で使う 1Password Families
+## 1Password Families のアカウント
 
 **1Password Families** は, 家族で使うためのプランです.
-1Password Enterprise では, メンバーが 1Password Families を利用できます.
-仕事用とは別に, 個人用の Families アカウントを作りました.
+個人用の Families アカウントを作りました.
 
 そのアカウントには, **Private の保管庫**と, 家族で使う**共有の保管庫**があります.
-1Password Enterprise の管理者は, この個人用アカウントの保管庫にはアクセスできません.
 共有の保管庫は使っていません.
 
 アカウントの作成時に, パスワードとは別に **Secret Key** が生成されます.
@@ -49,9 +47,9 @@ Secret Key は **緊急キット**に記載されるので, 移行の前に印�
 Google Password Manager の「パスワード チェックアップ」でも, 同様の確認ができます.
 移行した直後に一度確認し, 指摘された項目はパスワードを変更します.
 
-## 1Password – Password Manager
+## 1Password のブラウザ拡張機能
 
-[![1Password – Password Manager](https://images.ctfassets.net/2h488pz7kgfv/4G0Jp3YPCatBnrwomMvOMC/345ac51aff4f82ddf0025281942b75e6/downloads-browser-extension-open-graph-graphic-1200x630.jpg)](https://1password.com/downloads/browser-extension)
+[![1Password のブラウザ拡張機能](https://images.ctfassets.net/2h488pz7kgfv/4G0Jp3YPCatBnrwomMvOMC/345ac51aff4f82ddf0025281942b75e6/downloads-browser-extension-open-graph-graphic-1200x630.jpg)](https://1password.com/downloads/browser-extension)
 
 1Password のブラウザ拡張機能とデスクトップアプリの連携を有効にします.
 Touch ID 対応の Mac では, アプリで Touch ID によるロック解除も有効にすると, 拡張機能のロック解除にも使えます.
@@ -122,10 +120,10 @@ Mac を買い替えると Secretive の鍵は作り直しになり, 接続先に
 ## References
 
 - [1Password Families](https://1password.com/families/)
-- [1Password Enterprise](https://1password.com/enterprise/)
 - [緊急キット (1Password Support)](https://support.1password.com/emergency-kit/)
 - [Watchtower (1Password Support)](https://support.1password.com/watchtower/)
 - [パスキー (1Password Support)](https://support.1password.com/passkeys/)
+- [1Password のブラウザ拡張機能](https://1password.com/downloads/browser-extension)
 - [1Password CLI](https://developer.1password.com/docs/cli/)
 - [1Password の SSH エージェント](https://developer.1password.com/docs/ssh/)
 - [Secretive で SSH 鍵を Secure Enclave に置く](/posts/secretive-ssh-signing.html)
